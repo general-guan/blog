@@ -63,3 +63,17 @@ tom.id = 9527;
 // index.ts(14,5): error TS2540: Cannot assign to 'id' because it is a constant or a read-only property.
 ```
 
+## 接口继承接口
+
+```ts
+interface Alarm {
+    alert(): void;
+}
+
+interface LightableAlarm extends Alarm {
+    lightOn(): void;
+    lightOff(): void;
+}
+```
+
+## 接口继承类
