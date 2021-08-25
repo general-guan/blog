@@ -27,8 +27,8 @@ module.exports = {
           label: '前端',
         },
         {
-          href: 'https://github.com/facebook/docusaurus',
-          label: 'GitHub',
+          href: 'https://www.docusaurus.cn/',
+          label: 'docusaurus',
           position: 'right',
         },
       ],
