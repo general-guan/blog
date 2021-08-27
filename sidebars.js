@@ -45,6 +45,15 @@ module.exports = {
         'TypeScript/thanks',
       ],
     },
+    {
+      type: 'category',
+      label: 'Web API',
+      items: [
+        'WebAPI/file',
+        'WebAPI/thanks',
+      ],
+    },
+    'Redux',
     'Vite',
   ],
 };
