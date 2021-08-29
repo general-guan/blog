@@ -1,11 +1,23 @@
 # Redux
 
+## 原理图
+
+![](.\redux原理图.png)
+
 ## 安装
+
+npm
 
 ```bash
 npm install --save redux
 npm install --save react-redux # React 绑定库
 npm install --save-dev redux-devtools # 开发者工具
+```
+
+yarn
+
+```bash
+yarn add redux
 ```
 
 ## 快速上手
@@ -163,3 +175,53 @@ import { ADD_TODO, REMOVE_TODO } from './actionTypes'
 ```
 
 ### Action 创建函数
+
+### 异步 Action
+
+安装
+
+```bash
+yarn add redux-thunk
+```
+
+index.js
+
+```js
+import thunkMiddleware from 'redux-thunk'
+import { createStore, applyMiddleware } from 'redux'
+import { selectSubreddit, fetchPosts } from './actions'
+import rootReducer from './reducers'
+
+const loggerMiddleware = createLogger()
+
+const store = createStore(
+  rootReducer,
+  applyMiddleware(thunkMiddleware)
+)
+
+store.dispatch(selectSubreddit('reactjs'))
+store
+  .dispatch(fetchPosts('reactjs'))
+  .then(() => console.log(store.getState())
+)
+```
+
+## Store
+
+```js
+import { createStore } from 'redux'
+import todoApp from './reducers'
+let store = createStore(todoApp)
+```
+
+## Reducer
+
+## react-redux
+
+原理图
+
+![](.\react-redux模型图.png)
+
+## 鸣谢
+
+[Redux 中文文档](https://www.redux.org.cn/)

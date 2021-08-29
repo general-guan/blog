@@ -53,7 +53,7 @@ module.exports = {
         'WebAPI/thanks',
       ],
     },
-    'Redux',
+    'Redux/Redux',
     'Vite',
   ],
 };
