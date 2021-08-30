@@ -23,7 +23,11 @@ module.exports = {
           type: 'category',
           label: '运算符',
           items:[
-            'JavaScript/operators/arithmetic'
+            'JavaScript/operators/arithmetic',
+            'JavaScript/operators/comparison',
+            'JavaScript/operators/boolean',
+            'JavaScript/operators/bit',
+            'JavaScript/operators/priority',
           ]
         },
         'JavaScript/thanks'
@@ -55,5 +59,6 @@ module.exports = {
     },
     'Redux/Redux',
     'Vite',
+    'DevelopAttention',
   ],
 };
