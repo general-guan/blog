@@ -9,7 +9,7 @@ module.exports = {
         {
           type: 'category',
           label: '数据类型',
-          items:[
+          items: [
             'JavaScript/types/general',
             'JavaScript/types/null-undefined-boolean',
             'JavaScript/types/number',
@@ -22,7 +22,7 @@ module.exports = {
         {
           type: 'category',
           label: '运算符',
-          items:[
+          items: [
             'JavaScript/operators/arithmetic',
             'JavaScript/operators/comparison',
             'JavaScript/operators/boolean',
@@ -32,6 +32,13 @@ module.exports = {
         },
         'JavaScript/thanks'
       ],
+    },
+    {
+      type: 'category',
+      label: 'ES6',
+      items: [
+        'ES6/symbol',
+      ]
     },
     {
       type: 'category',
