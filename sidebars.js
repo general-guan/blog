@@ -65,6 +65,7 @@ module.exports = {
       ],
     },
     'Redux/Redux',
+    'Element',
     'Vite',
     'DevelopAttention',
   ],
