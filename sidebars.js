@@ -67,6 +67,7 @@ module.exports = {
     'Redux/Redux',
     'Element',
     'Vite',
+    'NPM',
     'DevelopAttention',
   ],
 };
