@@ -38,6 +38,8 @@ module.exports = {
       label: 'ES6',
       items: [
         'ES6/symbol',
+        'ES6/module',
+        'ES6/module-loader',
       ]
     },
     {
