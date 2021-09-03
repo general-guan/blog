@@ -1,5 +1,5 @@
 module.exports = {
-  docs: [
+  front: [
     'README',
     'Navigation',
     'Axios',
@@ -73,4 +73,7 @@ module.exports = {
     'NPM',
     'DevelopAttention',
   ],
+  end:[
+    'Node',
+  ]
 };

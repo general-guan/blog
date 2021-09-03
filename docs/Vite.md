@@ -1,6 +1,6 @@
 # Vite
 
-## 安装
+## 创建项目
 
 ```bash
 yarn create vite <project-name>
