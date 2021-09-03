@@ -1,6 +1,7 @@
 module.exports = {
   docs: [
     'README',
+    'Navigation',
     'Axios',
     {
       type: 'category',
