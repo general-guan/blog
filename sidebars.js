@@ -72,6 +72,7 @@ module.exports = {
     'Vite',
     'NPM',
     'DevelopAttention',
+    'Interview',
   ],
   end:[
     'Node',
