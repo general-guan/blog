@@ -90,3 +90,32 @@ npm install cool-ui
 npm install cool-ui@2.0.0
 ```
 
+
+
+
+
+
+
+
+
+## NPM 内网开发配置代理
+
+先查看一下有没有设置代理
+
+```bash
+npm config get proxy
+npm config get https-proxy
+```
+
+以上两个命令如果返回null，那么就不需要执行以下命令清理
+
+```bash
+npm config set https-proxy null
+npm config set proxy null
+```
+
+重新设置
+
+```bash
+npm config set registry https://registry.npmjs.org/
+```
