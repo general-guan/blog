@@ -62,7 +62,7 @@ module.exports = {
     },
     "Redux/Redux",
     "Element-UI",
-    "JLC-UI",
+    "Jlc-UI",
     "Vite",
     "NPM",
     "Prettierrc",
