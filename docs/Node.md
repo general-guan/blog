@@ -1518,31 +1518,84 @@ os.userInfo()
 
 返回包含当前 `username`、`uid`、`gid`、`shell` 和 `homedir` 的对象
 
+## Node.js 事件模块
 
+```js
+const EventEmitter = require('events')
+const door = new EventEmitter()
+```
 
+事件监听器返回及使用以下事件
 
+- 当监听器被添加时返回 `newListener`
+- 当监听器被移除时返回 `removeListener`
 
+emitter.addListener()
 
+`emitter.on()` 的别名
 
+emitter.emit()
 
+触发事件， 按照事件被注册的顺序同步地调用每个事件监听器
 
+```js
+door.emit("slam") // 触发 "slam" 事件
+```
 
+emitter.eventNames()
 
+返回字符串（表示在当前 `EventEmitter` 对象上注册的事件）数组
 
+```js
+door.eventNames()
+```
 
+emitter.getMaxListeners()
 
+获取可以添加到 `EventEmitter` 对象的监听器的最大数量（默认为 10，但可以使用 `setMaxListeners()` 进行增加或减少
 
+```js
+door.getMaxListeners()
+```
 
+emitter.listenerCount()
 
+获取作为参数传入的事件监听器的计数
 
+```js
+door.listenerCount('open')
+```
 
+emitter.listeners()
 
+获取作为参数传入的事件监听器的数组
 
+```js
+door.listeners('open')
+```
 
+emitter.on()
 
+添加当事件被触发时调用的回调函数
 
+```js
+door.on('open', () => {
+  console.log('打开')
+})
+```
 
+emitter.once()
 
+添加当事件在注册之后首次被触发时调用的回调函数， 该回调只会被调用一次，不会再被调用
+
+```js
+const EventEmitter = require('events')
+const ee = new EventEmitter()
+
+ee.once('my-event', () => {
+  //只调用一次回调函数。
+})
+```
 
 
 
