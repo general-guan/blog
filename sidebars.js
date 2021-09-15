@@ -65,6 +65,7 @@ module.exports = {
     "Jlc-UI",
     "Vite",
     "NPM",
+    "Cli",
     "Gulp",
     "Prettierrc",
     "DevelopAttention",
