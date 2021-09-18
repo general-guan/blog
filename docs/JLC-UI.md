@@ -6,15 +6,12 @@ package.json
 
 ```json
 {
-  "name": "jlc-ui",
-  "version": "0.1.0",
-  "private": false,
-  "main": "dist/jlc-ui.common.js",
+  "name": "jlc-ui", // 名称
+  "version": "0.1.0", // 版本
+  "private": false, // false 表示不是私有的，允许上传 npm
+  "main": "dist/jlc-ui.common.js", // 入口
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "lib": "vue-cli-service build --target lib packages/index.js"
+    "lib": "vue-cli-service build --target lib packages/index.js" // 接住 vue-cli 打包 dist 文件夹，并将 dist 文件夹上传npm
   }
 }
 ```

@@ -118,3 +118,19 @@ Api是在 `.Prettierrc` 中设置使用
 | 0        | --range-start | rangeStart:  |
 | Infinity | --range-end   | rangeEnd:    |
 
+## 常用设置
+
+```js
+module.exports = {
+    printWidth: 200,
+    tabWidth: 4,
+    useTabs: false,
+    semi: false,
+    singleQuote: false,
+    trailingComma: 'all',
+    bracketSpacing: true,
+    jsxBracketSameLine: false,
+    arrowParens: 'avoid',
+}
+```
+
