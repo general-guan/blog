@@ -128,7 +128,7 @@ inquirer
 
 > 模板地址 url 的路径
 >
-> ![](https://img-blog.csdnimg.cn/2019102717370071.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzgyMDg2Ng==,size_16,color_FFFFFF,t_70)
+> ![](./url.png)
 
 qwe-delete.js（对应 `qwe delete` 指令）
 

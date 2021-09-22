@@ -1,8 +1,14 @@
 module.exports = {
   front: [
     "README",
-    "Navigation",
-    "Axios",
+    {
+      type: "category",
+      label: "CSS",
+      items: [
+        "CSS/common",
+        "CSS/flex/flex"
+      ],
+    },
     {
       type: "category",
       label: "JavaScript",
@@ -60,16 +66,20 @@ module.exports = {
       label: "Web API",
       items: ["WebAPI/file", "WebAPI/thanks"],
     },
+    "Axios",
     "Redux/Redux",
     "Element-UI",
     "Jlc-UI",
     "Vite",
     "NPM",
-    "Cli",
+    "Cli/Cli",
     "Gulp",
     "Prettierrc",
     "DevelopAttention",
     "Interview",
+    "Navigation",
+    "WebStorm",
+    "Vue3",
   ],
-  end: ["Node"],
+  end: ["Node", "Express"],
 };
