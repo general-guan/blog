@@ -3,6 +3,13 @@ module.exports = {
     "README",
     {
       type: "category",
+      label: "HTML",
+      items: [
+        "HTML/meta",
+      ],
+    },
+    {
+      type: "category",
       label: "CSS",
       items: [
         "CSS/common",
@@ -66,6 +73,13 @@ module.exports = {
       label: "Web API",
       items: ["WebAPI/file", "WebAPI/thanks"],
     },
+    {
+      type: "category",
+      label: "Vue",
+      items: [
+        "Vue/Vue3",
+      ],
+    },
     "Axios",
     "Redux/Redux",
     "Element-UI",
@@ -79,7 +93,6 @@ module.exports = {
     "Interview",
     "Navigation",
     "WebStorm",
-    "Vue3",
   ],
   end: ["Node", "Express"],
 };
