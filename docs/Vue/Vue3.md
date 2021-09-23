@@ -399,6 +399,46 @@ export default defineComponent({
 </template>
 ```
 
+## 更好的 Tree-Shaking
+
+Vue3.x 在考虑到 `tree-shaking` 的基础上重构了全局和内部 API，表现结果就是现在的全局 API 需要通过 `ES Module` 的引用方式进行具名引用，比如在 Vue2.x 中，我们要使用 `nextTick`
+
+```js
+// vue2.x
+import Vue from "vue"
+
+Vue.nextTick(()=>{
+    ...
+})
+```
+
+在 Vue3.x 中改写成这样
+
+```js
+import { nextTick } from "vue"
+
+nextTick(() =>{
+    ...
+})
+```
+
+### 受影响的 API
+
+- `Vue.nextTick`
+- `Vue.observable`
+- `Vue.version`
+- `Vue.compile`
+- `Vue.set`
+- `Vue.delete`
+
+
+
+
+
+
+
+
+
 
 
 
