@@ -95,13 +95,16 @@ window.scrollBy(x: number, y: number): void;
 也可以接收一个 options 对象作为一个参数
 
 ```ts
+window.scrollTo(options?: ScrollToOptions): void;
+                
 interface ScrollToOptions {
   left?: number;
   top?: number;
   behavior?: "auto" | "smooth"; // auto 正常滚动，smooth 平滑滚动
 }
-window.scrollTo(options?: ScrollToOptions): void;
+```
 
+```js
 window.scrollTo({
   left: 0,
   top: 1000,
