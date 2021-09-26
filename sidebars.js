@@ -20,6 +20,7 @@ module.exports = {
       type: "category",
       label: "JavaScript",
       items: [
+        "JavaScript/common",
         {
           type: "category",
           label: "数据类型",
@@ -42,6 +43,13 @@ module.exports = {
             "JavaScript/operators/boolean",
             "JavaScript/operators/bit",
             "JavaScript/operators/priority",
+          ],
+        },
+        {
+          type: "category",
+          label: "BOM",
+          items: [
+            "JavaScript/bom/window",
           ],
         },
         "JavaScript/thanks",
