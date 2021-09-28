@@ -25,7 +25,7 @@ yarn add redux
 应用中所有的 state 都以一个对象树的形式储存在一个单一的 store 中， 惟一改变 state 的办法是触发 action，一个描述发生什么的对象， 为了描述 action 如何改变 state 树，你需要编写 reducers
 
 ```js
-import { createStore } from 'redux';
+import { createStore } from "redux";
 
 /**
  * 这是一个 reducer，形式为 (state, action) => state 的纯函数。
@@ -40,12 +40,12 @@ import { createStore } from 'redux';
  */
 function counter(state = 0, action) {
   switch (action.type) {
-  case 'INCREMENT':
-    return state + 1;
-  case 'DECREMENT':
-    return state - 1;
-  default:
-    return state;
+    case "INCREMENT":
+      return state + 1;
+    case "DECREMENT":
+      return state - 1;
+    default:
+      return state;
   }
 }
 
@@ -54,17 +54,15 @@ function counter(state = 0, action) {
 let store = createStore(counter);
 
 // 可以手动订阅更新，也可以事件绑定到视图层。
-store.subscribe(() =>
-  console.log(store.getState())
-);
+store.subscribe(() => console.log(store.getState()));
 
 // 改变内部 state 惟一方法是 dispatch 一个 action。
 // action 可以被序列化，用日记记录和储存下来，后期还可以以回放的方式执行
-store.dispatch({ type: 'INCREMENT' });
+store.dispatch({ type: "INCREMENT" });
 // 1
-store.dispatch({ type: 'INCREMENT' });
+store.dispatch({ type: "INCREMENT" });
 // 2
-store.dispatch({ type: 'DECREMENT' });
+store.dispatch({ type: "DECREMENT" });
 // 1
 ```
 
@@ -100,14 +98,14 @@ console.log(store.getState())
 
 ```js
 store.dispatch({
-  type: 'COMPLETE_TODO',
-  index: 1
-})
+  type: "COMPLETE_TODO",
+  index: 1,
+});
 
 store.dispatch({
-  type: 'SET_VISIBILITY_FILTER',
-  filter: 'SHOW_COMPLETED'
-})
+  type: "SET_VISIBILITY_FILTER",
+  filter: "SHOW_COMPLETED",
+});
 ```
 
 ### 使用纯函数来执行修改
@@ -115,42 +113,42 @@ store.dispatch({
 为了描述 action 如何改变 state tree ，你需要编写 reducers
 
 ```js
-function visibilityFilter(state = 'SHOW_ALL', action) {
+function visibilityFilter(state = "SHOW_ALL", action) {
   switch (action.type) {
-    case 'SET_VISIBILITY_FILTER':
-      return action.filter
+    case "SET_VISIBILITY_FILTER":
+      return action.filter;
     default:
-      return state
+      return state;
   }
 }
 
 function todos(state = [], action) {
   switch (action.type) {
-    case 'ADD_TODO':
+    case "ADD_TODO":
       return [
         ...state,
         {
           text: action.text,
-          completed: false
-        }
-      ]
-    case 'COMPLETE_TODO':
+          completed: false,
+        },
+      ];
+    case "COMPLETE_TODO":
       return state.map((todo, index) => {
         if (index === action.index) {
           return Object.assign({}, todo, {
-            completed: true
-          })
+            completed: true,
+          });
         }
-        return todo
-      })
+        return todo;
+      });
     default:
-      return state
+      return state;
   }
 }
 
-import { combineReducers, createStore } from 'redux'
-let reducer = combineReducers({ visibilityFilter, todos })
-let store = createStore(reducer)
+import { combineReducers, createStore } from "redux";
+let reducer = combineReducers({ visibilityFilter, todos });
+let store = createStore(reducer);
 ```
 
 ## Action
@@ -171,7 +169,7 @@ const ADD_TODO = 'ADD_TODO'
 Action 本质上是 JavaScript 普通对象，我们约定，action 内必须使用一个字符串类型的 `type` 字段来表示将要执行的动作，多数情况下，`type` 会被定义成字符串常量，当应用规模越来越大时，建议使用单独的模块或文件来存放 action
 
 ```js
-import { ADD_TODO, REMOVE_TODO } from './actionTypes'
+import { ADD_TODO, REMOVE_TODO } from "./actionTypes";
 ```
 
 ### Action 创建函数
@@ -187,31 +185,25 @@ yarn add redux-thunk
 index.js
 
 ```js
-import thunkMiddleware from 'redux-thunk'
-import { createStore, applyMiddleware } from 'redux'
-import { selectSubreddit, fetchPosts } from './actions'
-import rootReducer from './reducers'
+import thunkMiddleware from "redux-thunk";
+import { createStore, applyMiddleware } from "redux";
+import { selectSubreddit, fetchPosts } from "./actions";
+import rootReducer from "./reducers";
 
-const loggerMiddleware = createLogger()
+const loggerMiddleware = createLogger();
 
-const store = createStore(
-  rootReducer,
-  applyMiddleware(thunkMiddleware)
-)
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
-store.dispatch(selectSubreddit('reactjs'))
-store
-  .dispatch(fetchPosts('reactjs'))
-  .then(() => console.log(store.getState())
-)
+store.dispatch(selectSubreddit("reactjs"));
+store.dispatch(fetchPosts("reactjs")).then(() => console.log(store.getState()));
 ```
 
 ## Store
 
 ```js
-import { createStore } from 'redux'
-import todoApp from './reducers'
-let store = createStore(todoApp)
+import { createStore } from "redux";
+import todoApp from "./reducers";
+let store = createStore(todoApp);
 ```
 
 ## Reducer
@@ -220,7 +212,7 @@ let store = createStore(todoApp)
 
 原理图
 
-![](.\react-redux模型图.png)
+![](./react-redux模型图.png)
 
 ## 鸣谢
 
