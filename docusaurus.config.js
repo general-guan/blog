@@ -1,41 +1,41 @@
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const lightCodeTheme = require("prism-react-renderer/themes/github");
+const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'My Blog',
-  tagline: 'Dinosaurs are cool',
-  url: 'https://williamgjj.github.io', // 根路径
-  baseUrl: '/website/',
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  title: "My Blog",
+  tagline: "Dinosaurs are cool",
+  url: "https://williamgjj.github.io", // 根路径
+  baseUrl: "/blog/",
+  onBrokenLinks: "throw",
+  onBrokenMarkdownLinks: "warn",
+  favicon: "img/favicon.ico",
+  organizationName: "facebook", // Usually your GitHub org/user name.
+  projectName: "docusaurus", // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: '博客',
+      title: "博客",
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        alt: "My Site Logo",
+        src: "img/logo.svg",
       },
       items: [
         {
-          type: 'doc',
-          docId: 'README',
-          position: 'left',
-          label: '前端',
+          type: "doc",
+          docId: "README",
+          position: "left",
+          label: "前端",
         },
         {
-          type: 'doc',
-          docId: 'Node',
-          position: 'left',
-          label: '后端',
+          type: "doc",
+          docId: "Node",
+          position: "left",
+          label: "后端",
         },
         {
-          href: 'https://www.docusaurus.cn/',
-          label: 'docusaurus',
-          position: 'right',
+          href: "https://www.docusaurus.cn/",
+          label: "docusaurus",
+          position: "right",
         },
       ],
     },
@@ -91,22 +91,22 @@ module.exports = {
   },
   presets: [
     [
-      '@docusaurus/preset-classic',
+      "@docusaurus/preset-classic",
       {
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
+          sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/',
+            "https://github.com/facebook/docusaurus/edit/master/website/",
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/blog/',
+            "https://github.com/facebook/docusaurus/edit/master/website/blog/",
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: require.resolve("./src/css/custom.css"),
         },
       },
     ],
