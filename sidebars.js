@@ -4,17 +4,12 @@ module.exports = {
     {
       type: "category",
       label: "HTML",
-      items: [
-        "HTML/meta",
-      ],
+      items: ["HTML/meta"],
     },
     {
       type: "category",
       label: "CSS",
-      items: [
-        "CSS/common",
-        "CSS/flex/flex"
-      ],
+      items: ["CSS/common", "CSS/flex/flex"],
     },
     {
       type: "category",
@@ -48,9 +43,7 @@ module.exports = {
         {
           type: "category",
           label: "BOM",
-          items: [
-            "JavaScript/bom/window",
-          ],
+          items: ["JavaScript/bom/window"],
         },
         "JavaScript/thanks",
       ],
@@ -84,21 +77,17 @@ module.exports = {
     {
       type: "category",
       label: "Vue",
-      items: [
-        "Vue/Vue3",
-      ],
+      items: ["Vue/Vue3"],
     },
     {
       type: "category",
       label: "工程化",
-      items: [
-        "Engineering/Vue3",
-      ],
+      items: ["Engineering/Vue3"],
     },
     "Axios",
     "Redux/Redux",
     "Element-UI",
-    "Jlc-UI",
+    "Jlc-UI/Jlc-UI",
     "Vite",
     "NPM",
     "Cli/Cli",
