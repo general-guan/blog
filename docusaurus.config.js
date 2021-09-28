@@ -6,7 +6,7 @@ module.exports = {
   title: "My Blog",
   tagline: "Dinosaurs are cool",
   url: "https://williamgjj.github.io", // 根路径
-  baseUrl: "/",
+  baseUrl: "/blog/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
