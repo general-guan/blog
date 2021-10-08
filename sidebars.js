@@ -42,6 +42,11 @@ module.exports = {
         },
         {
           type: "category",
+          label: "标准库",
+          items: ["JavaScript/stdlib/array"],
+        },
+        {
+          type: "category",
           label: "BOM",
           items: ["JavaScript/bom/window"],
         },
