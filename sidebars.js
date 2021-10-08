@@ -9,7 +9,7 @@ module.exports = {
     {
       type: "category",
       label: "CSS",
-      items: ["CSS/common", "CSS/flex/flex"],
+      items: ["CSS/common", "CSS/skill", "CSS/flex/flex"],
     },
     {
       type: "category",

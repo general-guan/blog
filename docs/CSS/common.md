@@ -1,6 +1,16 @@
 # 公共
 
 ```css
+/* 清除浮动 */
+.clearfix{
+  zoom: 1;
+}
+.clearfix::after{
+  display: block;
+  content: '';
+  clear: both;
+}
+
 /* 文本显示为单行，超过部分隐藏并使用省略号 */
 .text-single-line {
   width: 120px; /* 固定宽度 */
