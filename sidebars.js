@@ -3,6 +3,14 @@ module.exports = {
     "README",
     {
       type: "category",
+      label: "书籍",
+      items: [
+        "Books/clean-code-javascript",
+        "Books/airbnb-javascript-style-guide",
+      ],
+    },
+    {
+      type: "category",
       label: "HTML",
       items: ["HTML/meta"],
     },
