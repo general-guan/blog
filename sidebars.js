@@ -4,10 +4,7 @@ module.exports = {
     {
       type: "category",
       label: "书籍",
-      items: [
-        "Books/clean-code-javascript",
-        "Books/airbnb-javascript-style-guide",
-      ],
+      items: ["Books/clean-code-javascript"],
     },
     {
       type: "category",

@@ -248,7 +248,399 @@ a.slice(2, 1) // []
 Array.prototype.slice.call({ 0: 'a', 1: 'b', length: 2 }) // ['a', 'b']
 ```
 
+### splice()
 
+`splice()` 方法用于删除原数组的一部分成员，并可以在删除的位置添加新的数组成员，返回值是被删除的元素，<u>注意，该方法会改变原数组</u>
 
+```ts
+splice(start: number, deleteCount: number, ...items: T[]): T[];
+```
 
+`splice` 的第一个参数是删除的起始位置（从0开始），第二个参数是被删除的元素个数，如果后面还有更多的参数，则表示这些就是要被插入数组的新元素
 
+```js
+var a = ['a', 'b', 'c', 'd', 'e', 'f'];
+a.splice(4, 2) // ["e", "f"]
+a // ["a", "b", "c", "d"]
+```
+
+起始位置如果是负数，就表示从倒数位置开始删除
+
+```js
+var a = ['a', 'b', 'c', 'd', 'e', 'f'];
+a.splice(-4, 2) // ["c", "d"]
+```
+
+如果只是单纯地插入元素，`splice` 方法的第二个参数可以设为 `0`
+
+```js
+var a = [1, 1, 1];
+
+a.splice(1, 0, 2) // []
+a // [1, 2, 1, 1]
+```
+
+如果只提供第一个参数，等同于将原数组在指定位置拆分成两个数组
+
+```js
+var a = [1, 2, 3, 4];
+a.splice(2) // [3, 4]
+a // [1, 2]
+```
+
+### sort()
+
+`sort` 方法对数组成员进行排序，默认是按照字典顺序排序，排序后，<u>原数组将被改变</u>
+
+```ts
+sort(compareFn?: (a: T, b: T) => number): this;
+```
+
+```js
+['d', 'c', 'b', 'a'].sort()
+// ['a', 'b', 'c', 'd']
+
+[4, 3, 2, 1].sort()
+// [1, 2, 3, 4]
+
+[11, 101].sort()
+// [101, 11]
+
+[10111, 1101, 111].sort()
+// [10111, 1101, 111]
+```
+
+如果想让 `sort` 方法按照自定义方式排序，可以传入一个函数作为参数，如果该函数的返回值大于 `0`，表示第一个成员排在第二个成员后面
+
+```js
+[10111, 1101, 111].sort(function (a, b) {
+  return a - b;
+})
+// [111, 1101, 10111]
+
+[
+  { name: "张三", age: 30 },
+  { name: "李四", age: 24 },
+  { name: "王五", age: 28  }
+].sort(function (o1, o2) {
+  return o1.age - o2.age;
+})
+// [
+//   { name: "李四", age: 24 },
+//   { name: "王五", age: 28  },
+//   { name: "张三", age: 30 }
+// ]
+```
+
+### map()
+
+`map()` 方法将数组的所有成员依次传入参数函数，然后把每一次的执行结果组成一个<u>新数组返回</u>
+
+```ts
+map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];
+```
+
+```js
+var numbers = [1, 2, 3];
+
+numbers.map(function (n) {
+  return n + 1;
+});
+// [2, 3, 4]
+
+numbers
+// [1, 2, 3]
+```
+
+`map()` 方法接受一个函数作为参数，该函数调用时，`map()` 方法向它传入三个参数：当前成员、当前位置和数组本身
+
+```js
+[1, 2, 3].map(function(elem, index, arr) {
+  return elem * index;
+});
+// [0, 2, 6]
+```
+
+`map()` 方法还可以接受第二个参数，用来绑定回调函数内部的 `this` 变量
+
+```js
+var arr = ['a', 'b', 'c'];
+
+[1, 2].map(function (e) {
+  return this[e];
+}, arr)
+// ['b', 'c']
+```
+
+如果数组有空位，`map()` 方法的回调函数在这个位置不会执行，会跳过数组的空位（不会跳过 `undefined` 和 `null`，但是会跳过空位）
+
+```js
+var f = function (n) { return 'a' };
+
+[1, undefined, 2].map(f) // ["a", "a", "a"]
+[1, null, 2].map(f) // ["a", "a", "a"]
+[1, , 2].map(f) // ["a", , "a"]
+```
+
+### forEach()
+
+`forEach()` 方法与 `map()` 方法很相似，也是对数组的所有成员依次执行参数函数，但是，`forEach()` 方法不返回值，只用来操作数据，这就是说，如果数组遍历的目的是为了得到返回值，那么使用 `map()` 方法，否则使用 `forEach()` 方法
+
+`forEach()` 的用法与 `map()` 方法一致，参数是一个函数，该函数同样接受三个参数：当前值、当前位置、整个数组
+
+```ts
+forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void;
+```
+
+```js
+function log(element, index, array) {
+  console.log('[' + index + '] = ' + element);
+}
+
+[2, 5, 9].forEach(log);
+// [0] = 2
+// [1] = 5
+// [2] = 9
+```
+
+`forEach()` 方法也可以接受第二个参数，绑定参数函数的 `this` 变量
+
+```js
+var out = [];
+
+[1, 2, 3].forEach(function(elem) {
+  this.push(elem * elem);
+}, out);
+
+out // [1, 4, 9]
+```
+
+注意，`forEach()` 方法无法中断执行，总是会将所有成员遍历完，如果希望符合某种条件时，就中断遍历，要使用 `for` 循环
+
+```js
+var arr = [1, 2, 3];
+
+for (var i = 0; i < arr.length; i++) {
+  if (arr[i] === 2) break;
+  console.log(arr[i]);
+}
+// 1
+```
+
+`forEach()`方法也会跳过数组的空位，（不会跳过 `undefined` 和 `null`，但是会跳过空位）
+
+```js
+var log = function (n) {
+  console.log(n + 1);
+};
+
+[1, undefined, 2].forEach(log)
+// 2
+// NaN
+// 3
+
+[1, null, 2].forEach(log)
+// 2
+// 1
+// 3
+
+[1, , 2].forEach(log)
+// 2
+// 3
+```
+
+### filter()
+
+`filter()` 方法用于过滤数组成员，满足条件的成员<u>组成一个新数组返回</u>
+
+`filter()` 方法的参数函数可以接受三个参数：当前成员，当前位置和整个数组
+
+```ts
+filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[];
+```
+
+```js
+[1, 2, 3, 4, 5].filter(function (elem, index, arr) {
+  return index % 2 === 0;
+});
+// [1, 3, 5]
+```
+
+`filter()` 方法还可以接受第二个参数，用来绑定参数函数内部的 `this` 变量
+
+```js
+var obj = { MAX: 3 };
+var myFilter = function (item) {
+  if (item > this.MAX) return true;
+};
+
+var arr = [2, 8, 3, 4, 1, 3, 2, 9];
+arr.filter(myFilter, obj) // [8, 4, 9]
+```
+
+### some()，every()
+
+这两个方法类似“断言”（assert），返回一个布尔值，表示判断数组成员是否符合某种条件
+
+它们接受一个函数作为参数，所有数组成员依次执行该函数，该函数接受三个参数：当前成员、当前位置和整个数组，然后返回一个布尔值
+
+`some` 方法是只要一个成员的返回值是 `true`，则整个 `some` 方法的返回值就是 `true`，否则返回 `false`
+
+```ts
+some(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): boolean;
+```
+
+```js
+var arr = [1, 2, 3, 4, 5];
+arr.some(function (elem, index, arr) {
+  return elem >= 3;
+});
+// true
+```
+
+`every` 方法是所有成员的返回值都是 `true`，整个 `every` 方法才返回 `true`，否则返回 `false`
+
+```ts
+every(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): boolean;
+```
+
+```js
+var arr = [1, 2, 3, 4, 5];
+arr.every(function (elem, index, arr) {
+  return elem >= 3;
+});
+// false
+```
+
+注意，对于空数组，`some` 方法返回 `false`，`every` 方法返回 `true`，回调函数都不会执行
+
+```js
+function isEven(x) { return x % 2 === 0 }
+
+[].some(isEven) // false
+[].every(isEven) // true
+```
+
+### reduce()，reduceRight()
+
+`reduce()` 方法和 `reduceRight()` 方法依次处理数组的每个成员，最终累计为一个值，它们的差别是，`reduce()` 是从左到右处理（从第一个成员到最后一个成员），`reduceRight()` 则是从右到左（从最后一个成员到第一个成员），其他完全一样
+
+`reduce()` 方法和 `reduceRight()` 方法的第一个参数都是一个函数，该函数接受以下四个参数
+
+1. 累积变量；第一次执行时，默认为数组的第一个成员；以后每次执行时，都是上一轮的返回值
+2. 当前变量；第一次执行时，默认为数组的第二个成员；以后每次执行时，都是下一个成员
+3. 当前位置；一个整数，表示第二个参数（当前变量）的位置，默认为 `1`
+4. 原数组
+
+```ts
+reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue: T): T;
+```
+
+```ts
+reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue: T): T;
+```
+
+```js
+[1, 2, 3, 4, 5].reduce(function (a, b) {
+  console.log(a, b);
+  return a + b;
+})
+// 1 2
+// 3 3
+// 6 4
+// 10 5
+//最后结果：15
+```
+
+上面代码中，`reduce()` 方法用来求出数组所有成员的和
+
+- 第一次执行：`a` 是数组的第一个成员 `1`，`b` 是数组的第二个成员 `2`
+- 第二次执行：`a` 为上一轮的返回值 `3`，`b` 为第三个成员 `3`
+- 第三次执行：`a` 为上一轮的返回值 `6`，`b` 为第四个成员 `4`
+- 第四次执行：`a` 为上一轮返回值 `10`，`b`为第五个成员 `5`，至此所有成员遍历完成，整个方法的返回值就是最后一轮的返回值 `15`
+
+如果要对累积变量指定初值，可以把它放在 `reduce()` 方法和 `reduceRight()` 方法的第二个参数
+
+```js
+[1, 2, 3, 4, 5].reduce(function (a, b) {
+  return a + b;
+}, 10);
+// 25
+```
+
+由于这两个方法会遍历数组，所以实际上可以用来做一些遍历相关的操作，比如，找出字符长度最长的数组成员
+
+```js
+function findLongest(entries) {
+  return entries.reduce(function (longest, entry) {
+    return entry.length > longest.length ? entry : longest;
+  }, '');
+}
+
+findLongest(['aaa', 'bb', 'c']) // "aaa"
+```
+
+### indexOf()，lastIndexOf()
+
+`indexOf` 方法返回给定元素在数组中第一次出现的位置，如果没有出现则返回 `-1`
+
+```ts
+indexOf(searchElement: T, fromIndex?: number): number;
+```
+
+```ts
+lastIndexOf(searchElement: T, fromIndex?: number): number;
+```
+
+```js
+var a = ['a', 'b', 'c'];
+
+a.indexOf('b') // 1
+a.indexOf('y') // -1
+```
+
+`indexOf` 方法还可以接受第二个参数，表示搜索的开始位置
+
+```js
+['a', 'b', 'c'].indexOf('a', 1) // -1
+```
+
+`lastIndexOf` 方法返回给定元素在数组中最后一次出现的位置，如果没有出现则返回 `-1`
+
+```js
+var a = [2, 5, 9, 2];
+a.lastIndexOf(2) // 3
+a.lastIndexOf(7) // -1
+```
+
+注意，这两个方法不能用来搜索 `NaN` 的位置，即它们无法确定数组成员是否包含 `NaN`，这是因为这两个方法内部，使用严格相等运算符（`===`）进行比较，而 `NaN` 是唯一一个不等于自身的值
+
+```js
+[NaN].indexOf(NaN) // -1
+[NaN].lastIndexOf(NaN) // -1
+```
+
+### 链式使用
+
+上面这些数组方法之中，有不少返回的还是数组，所以可以链式使用
+
+```js
+var users = [
+  {name: 'tom', email: 'tom@example.com'},
+  {name: 'peter', email: 'peter@example.com'}
+];
+
+users
+.map(function (user) {
+  return user.email;
+})
+.filter(function (email) {
+  return /^t/.test(email);
+})
+.forEach(function (email) {
+  console.log(email);
+});
+// "tom@example.com"
+```
+
+上面代码中，先产生一个所有 Email 地址组成的数组，然后再过滤出以 `t` 开头的 Email 地址，最后将它打印出来
