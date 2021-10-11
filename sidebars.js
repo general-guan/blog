@@ -3,13 +3,18 @@ module.exports = {
     "README",
     {
       type: "category",
+      label: "书籍",
+      items: ["Books/clean-code-javascript"],
+    },
+    {
+      type: "category",
       label: "HTML",
       items: ["HTML/meta"],
     },
     {
       type: "category",
       label: "CSS",
-      items: ["CSS/common", "CSS/flex/flex", "CSS/interview"],
+      items: ["CSS/common", "CSS/skill", "CSS/flex/flex", "CSS/interview"],
     },
     {
       type: "category",
@@ -39,6 +44,11 @@ module.exports = {
             "JavaScript/operators/bit",
             "JavaScript/operators/priority",
           ],
+        },
+        {
+          type: "category",
+          label: "标准库",
+          items: ["JavaScript/stdlib/array"],
         },
         {
           type: "category",
