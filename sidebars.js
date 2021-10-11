@@ -9,7 +9,7 @@ module.exports = {
     {
       type: "category",
       label: "CSS",
-      items: ["CSS/common", "CSS/flex/flex"],
+      items: ["CSS/common", "CSS/flex/flex", "CSS/interview"],
     },
     {
       type: "category",
@@ -51,7 +51,7 @@ module.exports = {
     {
       type: "category",
       label: "ES6",
-      items: ["ES6/symbol", "ES6/module", "ES6/module-loader"],
+      items: ["ES6/let", "ES6/symbol", "ES6/module", "ES6/module-loader"],
     },
     {
       type: "category",
