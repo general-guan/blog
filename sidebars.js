@@ -100,6 +100,7 @@ module.exports = {
     "Jlc-UI/Jlc-UI",
     "Vite",
     "NPM",
+    "Jest",
     "Cli/Cli",
     "Gulp",
     "Prettierrc",
