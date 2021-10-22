@@ -114,17 +114,52 @@ obj instanceof Number // true
 
 ### Object.keys()，Object.getOwnPropertyNames()
 
+`Object.keys` 方法和 `Object.getOwnPropertyNames` 方法都用来遍历对象的属性
 
+`Object.keys` 方法与 `Object.getOwnPropertyNames` 方法的参数是一个对象，返回一个数组，该数组的成员都是该对象自身的（而不是继承的）所有属性名，唯一的区别是，`Object.keys` 方法只返回可枚举的属性，`Object.getOwnPropertyNames` 方法还返回不可枚举的属性名
 
+```js
+var a = ['Hello', 'World'];
 
+Object.keys(a) // ["0", "1"]
+Object.getOwnPropertyNames(a) // ["0", "1", "length"]
+```
 
+由于 JavaScript 没有提供计算对象属性个数的方法，所以可以用这两个方法代替
 
+```js
+var obj = {
+  p1: 123,
+  p2: 456
+};
 
+Object.keys(obj).length // 2
+Object.getOwnPropertyNames(obj).length // 2
+```
 
+### 其他方法
 
+**（1）对象属性模型的相关方法**
 
+- `Object.getOwnPropertyDescriptor()`：获取某个属性的描述对象
+- `Object.defineProperty()`：通过描述对象，定义某个属性
+- `Object.defineProperties()`：通过描述对象，定义多个属性
 
+**（2）控制对象状态的方法**
 
+- `Object.preventExtensions()`：防止对象扩展
+- `Object.isExtensible()`：判断对象是否可扩展
+- `Object.seal()`：禁止对象配置
+- `Object.isSealed()`：判断一个对象是否可配置
+- `Object.freeze()`：冻结一个对象
+- `Object.isFrozen()`：判断一个对象是否被冻结
+
+**（3）原型链相关方法**
+
+- `Object.create()`：该方法可以指定原型对象和属性，返回一个新的对象
+- `Object.getPrototypeOf()`：获取对象的`Prototype`对象
+
+## Object 的实例方法
 
 
 

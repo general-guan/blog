@@ -21,6 +21,7 @@ module.exports = {
       label: "JavaScript",
       items: [
         "JavaScript/common",
+        "JavaScript/handwritten",
         {
           type: "category",
           label: "数据类型",
