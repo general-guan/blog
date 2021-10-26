@@ -95,6 +95,7 @@ module.exports = {
       label: "工程化",
       items: ["Engineering/Vue3"],
     },
+    "Performance-Optimization/Performance-Optimization",
     "Axios",
     "Redux/Redux",
     "Element-UI",
