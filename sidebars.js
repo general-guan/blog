@@ -49,7 +49,11 @@ module.exports = {
         {
           type: "category",
           label: "标准库",
-          items: ["JavaScript/stdlib/object", "JavaScript/stdlib/array"],
+          items: [
+            "JavaScript/stdlib/object",
+            "JavaScript/stdlib/attributes",
+            "JavaScript/stdlib/array",
+          ],
         },
         {
           type: "category",

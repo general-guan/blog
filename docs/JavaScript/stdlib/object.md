@@ -354,9 +354,16 @@ person.toLocaleString() // 白求恩
 
 ### Object.prototype.hasOwnProperty()
 
+`Object.prototype.hasOwnProperty` 方法接受一个字符串作为参数，返回一个布尔值，表示该实例对象自身是否具有该属性
 
+```js
+var obj = {
+  p: 123
+};
 
-
+obj.hasOwnProperty('p') // true
+obj.hasOwnProperty('toString') // false
+```
 
 
 
