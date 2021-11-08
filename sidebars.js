@@ -20,8 +20,6 @@ module.exports = {
       type: "category",
       label: "JavaScript",
       items: [
-        "JavaScript/common",
-        "JavaScript/handwritten",
         {
           type: "category",
           label: "数据类型",
@@ -60,6 +58,8 @@ module.exports = {
           label: "BOM",
           items: ["JavaScript/bom/window"],
         },
+        "JavaScript/common",
+        "JavaScript/handwritten",
         "JavaScript/thanks",
       ],
     },
