@@ -52,6 +52,7 @@ module.exports = {
             "JavaScript/stdlib/attributes",
             "JavaScript/stdlib/array",
             "JavaScript/stdlib/wrapper",
+            "JavaScript/stdlib/boolean",
           ],
         },
         {
