@@ -51,6 +51,7 @@ module.exports = {
             "JavaScript/stdlib/object",
             "JavaScript/stdlib/attributes",
             "JavaScript/stdlib/array",
+            "JavaScript/stdlib/wrapper",
           ],
         },
         {
