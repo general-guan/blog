@@ -53,6 +53,7 @@ module.exports = {
             "JavaScript/stdlib/array",
             "JavaScript/stdlib/wrapper",
             "JavaScript/stdlib/boolean",
+            "JavaScript/stdlib/number",
           ],
         },
         {
