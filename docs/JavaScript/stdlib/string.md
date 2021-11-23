@@ -251,17 +251,51 @@ one + two + three // "33"
 'hello world'.lastIndexOf('o', 6) // 4
 ```
 
+### String.prototype.trim()
 
+`trim` 方法用于去除字符串两端的空格，返回一个新字符串，不改变原字符串
 
+```js
+'  hello world  '.trim()
+// "hello world"
+```
 
+该方法去除的不仅是空格，还包括制表符（`\t`、`\v`）、换行符（`\n`）和回车符（`\r`）
 
+```js
+'\r\nabc \t'.trim() // 'abc'
+```
 
+### String.prototype.toLowerCase()，String.prototype.toUpperCase()
 
+`toLowerCase` 方法用于将一个字符串全部转为小写，`toUpperCase` 则是全部转为大写，它们都返回一个新字符串，不改变原字符串
 
+```js
+'Hello World'.toLowerCase()
+// "hello world"
 
+'Hello World'.toUpperCase()
+// "HELLO WORLD"
+```
 
+### String.prototype.match()
 
+`match` 方法用于确定原字符串是否匹配某个子字符串，返回一个数组，成员为匹配的第一个字符串，如果没有找到匹配，则返回 `null`
 
+```js
+'cat, bat, sat, fat'.match('at') // ["at"]
+'cat, bat, sat, fat'.match('xt') // null
+```
+
+返回的数组还有 `index` 属性和 `input` 属性，分别表示匹配字符串开始的位置和原始字符串
+
+```js
+var matches = 'cat, bat, sat, fat'.match('at');
+matches.index // 1
+matches.input // "cat, bat, sat, fat"
+```
+
+`match` 方法还可以使用正则表达式作为参数，详见《正则表达式》一章
 
 
 
