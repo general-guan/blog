@@ -229,7 +229,7 @@ random_str(6) // "NdQKOr"
 - `Math.acos()`：返回参数的反余弦（返回值为弧度值）
 - `Math.atan()`：返回参数的反正切（返回值为弧度值）
 
-```
+```js
 Math.sin(0) // 0
 Math.cos(0) // 1
 Math.tan(0) // 0

@@ -56,6 +56,7 @@ module.exports = {
             "JavaScript/stdlib/number",
             "JavaScript/stdlib/string",
             "JavaScript/stdlib/math",
+            "JavaScript/stdlib/date",
           ],
         },
         {
