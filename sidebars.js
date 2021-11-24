@@ -55,6 +55,7 @@ module.exports = {
             "JavaScript/stdlib/boolean",
             "JavaScript/stdlib/number",
             "JavaScript/stdlib/string",
+            "JavaScript/stdlib/math",
           ],
         },
         {
