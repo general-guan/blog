@@ -122,6 +122,11 @@ module.exports = {
       label: "开发",
       items: ["Develop/Attention", "Develop/Token"],
     },
+    {
+      type: "category",
+      label: "Github",
+      items: ["Github/ssh"],
+    },
     "Interview",
     "Navigation",
     "WebStorm",
