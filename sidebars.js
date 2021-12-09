@@ -111,7 +111,11 @@ module.exports = {
     "Redux/Redux",
     "Element-UI",
     "Jlc-UI/Jlc-UI",
-    "Vite",
+    {
+      type: "category",
+      label: "Vite",
+      items: ["Vite/Vite","Vite/md-to-vue"],
+    },
     "NPM",
     "Jest",
     "Cli/Cli",
