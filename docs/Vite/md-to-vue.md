@@ -540,3 +540,6 @@ ${script}
 `
 ```
 
+## 参考链接
+
+[vite实现md转vue](https://blog.csdn.net/qq_41614928/article/details/120316523)
