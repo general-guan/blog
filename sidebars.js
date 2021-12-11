@@ -107,7 +107,11 @@ module.exports = {
     },
     "Performance-Optimization/Performance-Optimization",
     "Security",
-    "Axios",
+    {
+      type: "category",
+      label: "Axios",
+      items: ["Axios/Axios","Axios/axios-refeshToken"],
+    },
     "Redux/Redux",
     "Element-UI",
     "Jlc-UI/Jlc-UI",
