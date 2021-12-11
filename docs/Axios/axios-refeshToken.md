@@ -222,3 +222,6 @@ axios.interceptors.response.use(
 );
 ```
 
+## 参考链接
+
+[会话过期后token刷新，重新请求接口（订阅发布模式） - 掘金](https://juejin.cn/post/7037787299202990093?utm_source=gold_browser_extension#heading-0)
