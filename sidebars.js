@@ -132,6 +132,11 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Git",
+      items: ["Git/Git"],
+    },
+    {
+      type: "category",
       label: "Github",
       items: ["Github/ssh"],
     },
