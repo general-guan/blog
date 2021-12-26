@@ -107,11 +107,19 @@ module.exports = {
     },
     "Performance-Optimization/Performance-Optimization",
     "Security",
-    "Axios",
+    {
+      type: "category",
+      label: "Axios",
+      items: ["Axios/Axios","Axios/axios-refeshToken"],
+    },
     "Redux/Redux",
     "Element-UI",
     "Jlc-UI/Jlc-UI",
-    "Vite",
+    {
+      type: "category",
+      label: "Vite",
+      items: ["Vite/Vite","Vite/md-to-vue"],
+    },
     "NPM",
     "Sass",
     "Jest",
@@ -122,6 +130,11 @@ module.exports = {
       type: "category",
       label: "开发",
       items: ["Develop/Attention", "Develop/Token"],
+    },
+    {
+      type: "category",
+      label: "Git",
+      items: ["Git/Git"],
     },
     {
       type: "category",
