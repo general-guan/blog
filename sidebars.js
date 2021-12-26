@@ -113,6 +113,7 @@ module.exports = {
     "Jlc-UI/Jlc-UI",
     "Vite",
     "NPM",
+    "Sass",
     "Jest",
     "Cli/Cli",
     "Gulp",
