@@ -98,7 +98,7 @@ module.exports = {
     {
       type: "category",
       label: "Vue",
-      items: ["Vue/Vue3"],
+      items: ["Vue/Vue3", "Vue/Vuex"],
     },
     {
       type: "category",
@@ -110,7 +110,7 @@ module.exports = {
     {
       type: "category",
       label: "Axios",
-      items: ["Axios/Axios","Axios/axios-refeshToken"],
+      items: ["Axios/Axios", "Axios/axios-refeshToken"],
     },
     "Redux/Redux",
     "Element-UI",
@@ -118,7 +118,7 @@ module.exports = {
     {
       type: "category",
       label: "Vite",
-      items: ["Vite/Vite","Vite/md-to-vue"],
+      items: ["Vite/Vite", "Vite/md-to-vue"],
     },
     "NPM",
     "Sass",
@@ -144,6 +144,7 @@ module.exports = {
     "Interview",
     "Navigation",
     "WebStorm",
+    "Webpack",
     "Fiddler/Fiddler",
   ],
   end: ["Node", "Express"],
