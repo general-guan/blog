@@ -98,7 +98,7 @@ module.exports = {
     {
       type: "category",
       label: "Vue",
-      items: ["Vue/Vue3", "Vue/Vuex"],
+      items: ["Vue/Vue3", "Vue/Vuex", "Vue/Vue-Cli"],
     },
     {
       type: "category",
