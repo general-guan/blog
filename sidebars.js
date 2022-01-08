@@ -97,6 +97,11 @@ module.exports = {
     },
     {
       type: "category",
+      label: "设计模式",
+      items: ["Design-Pattern/Observer"],
+    },
+    {
+      type: "category",
       label: "Vue",
       items: ["Vue/Vue3", "Vue/Vuex", "Vue/Vue-Cli"],
     },
