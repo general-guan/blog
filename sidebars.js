@@ -98,7 +98,11 @@ module.exports = {
     {
       type: "category",
       label: "设计模式",
-      items: ["Design-Pattern/Observer", "Design-Pattern/Strategy"],
+      items: [
+        "Design-Pattern/Abstract-Factory",
+        "Design-Pattern/Observer",
+        "Design-Pattern/Strategy",
+      ],
     },
     {
       type: "category",
