@@ -9,12 +9,13 @@ module.exports = {
     {
       type: "category",
       label: "HTML",
-      items: ["HTML/meta"],
+      items: ["HTML/meta","HTML/interview"],
     },
     {
       type: "category",
       label: "CSS",
       items: [
+        "CSS/CSS",
         "CSS/common",
         "CSS/skill",
         "CSS/text/text",
@@ -160,9 +161,10 @@ module.exports = {
       type: "category",
       label: "面试",
       items: [
-        "Interview/CSS",
-        "Interview/JavaScript",
-        "Interview/Vue",
+        "Interview/HTML/HTML",
+        "Interview/CSS/CSS",
+        "Interview/JavaScript/JavaScript",
+        "Interview/Vue/Vue",
         "Interview/Interview",
       ],
     },
