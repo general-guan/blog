@@ -150,7 +150,16 @@ module.exports = {
       label: "Github",
       items: ["Github/ssh"],
     },
-    "Interview",
+    {
+      type: "category",
+      label: "面试",
+      items: [
+        "Interview/CSS",
+        "Interview/JavaScript",
+        "Interview/Vue",
+        "Interview/Interview",
+      ],
+    },
     "Navigation",
     "WebStorm",
     "Webpack",
