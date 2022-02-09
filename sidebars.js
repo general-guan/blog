@@ -9,7 +9,7 @@ module.exports = {
     {
       type: "category",
       label: "HTML",
-      items: ["HTML/meta","HTML/interview"],
+      items: ["HTML/meta", "HTML/interview"],
     },
     {
       type: "category",
@@ -164,7 +164,14 @@ module.exports = {
         "Interview/HTML/HTML",
         "Interview/CSS/CSS",
         "Interview/JavaScript/JavaScript",
+        "Interview/Web API/Web API",
+        "Interview/HTTP/HTTP",
         "Interview/Vue/Vue",
+        "Interview/Webpack/Webpack",
+        "Interview/Module/Module",
+        "Interview/Performance/Performance",
+        "Interview/Handle/Handle",
+        "Interview/Other/Other",
         "Interview/Interview",
       ],
     },
