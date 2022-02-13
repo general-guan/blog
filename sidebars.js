@@ -177,7 +177,7 @@ module.exports = {
     },
     "Navigation",
     "WebStorm",
-    "Webpack",
+    "Webpack/Webpack",
     "Fiddler/Fiddler",
   ],
   end: ["Node", "Express"],
