@@ -515,6 +515,155 @@ module.exports = {
 
 ### 动态导入(dynamic import)
 
+当涉及到动态代码拆分时，webpack 提供了两个类似的技术。第一种，也是推荐选择的方式是，使用符合 [ECMAScript 提案](https://github.com/tc39/proposal-dynamic-import) 的 [`import()` 语法](https://webpack.docschina.org/api/module-methods/#import-1) 来实现动态导入
+
+```js
+import _ from 'lodash';
+
+function getComponent() {
+    const element = document.createElement('div');
+    
+    // import('')
+    return import('lodash')
+        .then(({ default: _ }) => {
+        const element = document.createElement('div');
+        element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+        return element;
+    })
+        .catch((error) => 'An error occurred while loading the component');
+}
+
+
+getComponent().then((component) => {
+    document.body.appendChild(component);
+});
+```
+
+### 预获取/预加载模块(prefetch/preload module)
+
+在声明 import 时，使用下面这些内置指令，可以让 webpack 输出 "resource hint(资源提示)"，来告知浏览器：
+
+- **prefetch**(预获取)：将来某些导航下可能需要的资源
+- **preload**(预加载)：当前导航下可能需要资源
+
+**prefetch**(预获取)
+
+```js
+import(/* webpackPrefetch: true */ './path/to/LoginModal.js');
+```
+
+**preload**(预加载)
+
+```js
+import(/* webpackPreload: true */ 'ChartingLibrary');
+```
+
+与 prefetch 指令相比，preload 指令有许多不同之处：
+
+- preload chunk 会在父 chunk 加载时，以并行方式开始加载，prefetch chunk 会在父 chunk 加载结束后开始加载
+- preload chunk 具有中等优先级，并立即下载，prefetch chunk 在浏览器闲置时下载
+- preload chunk 会在父 chunk 中立即请求，用于当下时刻，prefetch chunk 会用于未来的某个时刻
+- 浏览器支持程度不同
+
+### bundle 分析(bundle analysis)
+
+一旦开始分离代码，一件很有帮助的事情是，分析输出结果来检查模块在何处结束。 [官方分析工具](https://github.com/webpack/analyse) 是一个不错的开始。还有一些其他社区支持的可选项：
+
+- [webpack-chart](https://alexkuz.github.io/webpack-chart/): webpack stats 可交互饼图
+- [webpack-visualizer](https://chrisbateman.github.io/webpack-visualizer/): 可视化并分析你的 bundle，检查哪些模块占用空间，哪些可能是重复使用的
+- [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer)：一个 plugin 和 CLI 工具，它将 bundle 内容展示为一个便捷的、交互式、可缩放的树状图形式
+- [webpack bundle optimize helper](https://webpack.jakoblind.no/optimize)：这个工具会分析你的 bundle，并提供可操作的改进措施，以减少 bundle 的大小
+- [bundle-stats](https://github.com/bundle-stats/bundle-stats)：生成一个 bundle 报告（bundle 大小、资源、模块），并比较不同构建之间的结果
+
+## 缓存
+
+以上，我们使用 webpack 来打包我们的模块化后的应用程序，webpack 会生成一个可部署的 `/dist` 目录，然后把打包后的内容放置在此目录中。只要 `/dist` 目录中的内容部署到 server 上，client（通常是浏览器）就能够访问此 server 的网站及其资源。而最后一步获取资源是比较耗费时间的，这就是为什么浏览器使用一种名为 [缓存](https://en.wikipedia.org/wiki/Cache_(computing)) 的技术。可以通过命中缓存，以降低网络流量，使网站加载速度更快，然而，如果我们在部署新版本时不更改资源的文件名，浏览器可能会认为它没有被更新，就会使用它的缓存版本。由于缓存的存在，当你需要获取新的代码时，就会显得很棘手
+
+此指南的重点在于通过必要的配置，以确保 webpack 编译生成的文件能够被客户端缓存，而在文件内容变化后，能够请求到新的文件
+
+### 输出文件的文件名(output filename)
+
+我们可以通过替换 `output.filename` 中的 [substitutions](https://webpack.docschina.org/configuration/output/#outputfilename) 设置，来定义输出文件的名称。webpack 提供了一种使用称为 **substitution(可替换模板字符串)** 的方式，通过带括号字符串来模板化文件名。其中，`[contenthash]` substitution 将根据资源内容创建出唯一 hash。当资源内容发生变化时，`[contenthash]` 也会发生变化
+
+webpack.config.js
+
+```js
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+module.exports = {
+  entry: "./src/index.js",
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: "Caching",
+    }),
+  ],
+  output: {
+    filename: "[name].[contenthash].js",
+    path: path.resolve(__dirname, "dist"),
+    clean: true,
+  },
+};
+```
+
+### 提取引导模板(extracting boilerplate)
+
+正如我们在 [代码分离](https://webpack.docschina.org/guides/code-splitting) 中所学到的，[`SplitChunksPlugin`](https://webpack.docschina.org/plugins/split-chunks-plugin/) 可以用于将模块分离到单独的 bundle 中。webpack 还提供了一个优化功能，可使用 [`optimization.runtimeChunk`](https://webpack.docschina.org/configuration/optimization/#optimizationruntimechunk) 选项将 runtime 代码拆分为一个单独的 chunk。将其设置为 `single` 来为所有 chunk 创建一个 runtime bundle
+
+将第三方库(library)（例如 `lodash` 或 `react`）提取到单独的 `vendor` chunk 文件中，是比较推荐的做法，这是因为，它们很少像本地的源代码那样频繁修改。因此通过实现以上步骤，利用 client 的长效缓存机制，命中缓存来消除请求，并减少向 server 获取资源，同时还能保证 client 代码和 server 代码版本一致。 这可以通过使用 [SplitChunksPlugin 示例 2](https://webpack.docschina.org/plugins/split-chunks-plugin/#split-chunks-example-2) 中演示的 [`SplitChunksPlugin`](https://webpack.docschina.org/plugins/split-chunks-plugin/) 插件的 [`cacheGroups`](https://webpack.docschina.org/plugins/split-chunks-plugin/#splitchunkscachegroups) 选项来实现。我们在 `optimization.splitChunks` 添加如下 `cacheGroups` 参数并构建：
+
+webpack.config.js
+
+```js
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+module.exports = {
+  entry: "./src/index.js",
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: "Caching",
+    }),
+  ],
+  output: {
+    filename: "[name].[contenthash].js",
+    path: path.resolve(__dirname, "dist"),
+    clean: true,
+  },
+  optimization: {
+    // runtimeChunk
+    runtimeChunk: "single",
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "all",
+        },
+      },
+    },
+  },
+};
+```
+
+### 模块标识符(module identifier)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
