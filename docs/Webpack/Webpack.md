@@ -648,39 +648,180 @@ module.exports = {
 
 ### 模块标识符(module identifier)
 
+不论是否添加任何新的本地依赖，对于前后两次构建，`vendor` hash 都应该保持一致
 
+webpack.config.js
 
+```diff
+  const path = require('path');
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+  module.exports = {
+    entry: './src/index.js',
+    plugins: [
+      new HtmlWebpackPlugin({
+        title: 'Caching',
+      }),
+    ],
+    output: {
+      filename: '[name].[contenthash].js',
+      path: path.resolve(__dirname, 'dist'),
+      clean: true,
+    },
+    optimization: {
++     moduleIds: 'deterministic',
+      runtimeChunk: 'single',
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        },
+      },
+    },
+  };
+```
 
+## 创建 library
 
+除了打包应用程序，webpack 还可以用于打包 JavaScript library。以下指南适用于希望简化打包策略的 library 作者
 
+### Expose the Library
 
+```diff
+ const path = require('path');
 
+ module.exports = {
+   entry: './src/index.js',
+   output: {
+     path: path.resolve(__dirname, 'dist'),
+     filename: 'webpack-numbers.js',
++    library: {
++      name: 'webpackNumbers',
++      type: 'umd',
++    },
+   },
+ };
+```
 
+现在 webpack 将打包一个库，其可以与 CommonJS、AMD 以及 script 标签使用
 
+### 外部化 lodash
 
+现在，如果执行 `webpack`，你会发现创建了一个体积相当大的文件。如果你查看这个文件，会看到 lodash 也被打包到代码中。在这种场景中，我们更倾向于把 `lodash` 当作 `peerDependency`。也就是说，consumer(使用者) 应该已经安装过 `lodash` 。因此，你就可以放弃控制此外部 library ，而是将控制权让给使用 library 的 consumer。
 
+这可以使用 `externals` 配置来完成：
 
+webpack.config.js
 
+```diff
+  const path = require('path');
 
+  module.exports = {
+    entry: './src/index.js',
+    output: {
+      path: path.resolve(__dirname, 'dist'),
+      filename: 'webpack-numbers.js',
+      library: {
+        name: "webpackNumbers",
+        type: "umd"
+      },
+    },
++   externals: {
++     lodash: {
++       commonjs: 'lodash',
++       commonjs2: 'lodash',
++       amd: 'lodash',
++       root: '_',
++     },
++   },
+  };
+```
 
+#### 外部化的限制
 
+对于想要实现从一个依赖中调用多个文件的那些 library：
 
+```js
+import A from 'library/one';
+import B from 'library/two';
 
+// ...
+```
 
+无法通过在 externals 中指定整个 `library` 的方式，将它们从 bundle 中排除。而是需要逐个或者使用一个正则表达式，来排除它们。
 
+```js
+module.exports = {
+  //...
+  externals: [
+    'library/one',
+    'library/two',
+    // 匹配以 "library/" 开始的所有依赖
+    /^library\/.+$/,
+  ],
+};
+```
 
+### 最终步骤
 
+遵循 [生产环境](https://webpack.docschina.org/guides/production) 指南中提到的步骤，来优化生产环境下的输出结果。那么，我们还需要将生成 bundle 的文件路径，添加到 `package.json` 中的 `main` 字段中
 
+package.json
 
+```json
+{
+  ...
+  "main": "dist/webpack-numbers.js",
+  ...
+}
+```
 
+或者，按照这个 [指南](https://github.com/dherman/defense-of-dot-js/blob/master/proposal.md#typical-usage)，将其添加为标准模块：
 
+```json
+{
+  ...
+  "module": "src/index.js",
+  ...
+}
+```
 
+## 环境变量
 
+想要消除 `webpack.config.js` 在 [开发环境](https://webpack.docschina.org/guides/development) 和 [生产环境](https://webpack.docschina.org/guides/production) 之间的差异，你可能需要环境变量(environment variable)
 
+webpack 命令行 [环境配置](https://webpack.docschina.org/api/cli/#environment-options) 的 `--env` 参数，可以允许你传入任意数量的环境变量。而在 `webpack.config.js` 中可以访问到这些环境变量。例如，`--env production` 或 `--env goal=local`。
 
+```bash
+npx webpack --env goal=local --env production --progress
+```
 
+对于我们的 webpack 配置，有一个必须要修改之处。通常，`module.exports` 指向配置对象。要使用 `env` 变量，你必须将 `module.exports` 转换成一个函数
 
+webpack.config.js
+
+```js
+const path = require('path');
+
+module.exports = (env) => {
+  // Use env.<YOUR VARIABLE> here:
+  console.log('Goal: ', env.goal); // 'local'
+  console.log('Production: ', env.production); // true
+
+  return {
+    entry: './src/index.js',
+    output: {
+      filename: 'bundle.js',
+      path: path.resolve(__dirname, 'dist'),
+    },
+  };
+};
+```
+
+## 构建性能
 
 
 
