@@ -823,6 +823,101 @@ module.exports = (env) => {
 
 ## 构建性能
 
+### 通用环境
+
+#### loader
+
+通过使用 `include` 字段，仅将 loader 应用在实际需要将其转换的模块
+
+```js
+const path = require('path');
+
+module.exports = {
+  //...
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        include: path.resolve(__dirname, 'src'),
+        loader: 'babel-loader',
+      },
+    ],
+  },
+};
+```
+
+#### 引导(bootstrap)
+
+每个额外的 loader/plugin 都有其启动时间，尽量少地使用工具
+
+#### 解析
+
+以下步骤可以提高解析速度：
+
+- 减少 `resolve.modules`, `resolve.extensions`, `resolve.mainFiles`, `resolve.descriptionFiles` 中条目数量，因为他们会增加文件系统调用的次数
+- 如果你不使用 symlinks（例如 `npm link` 或者 `yarn link`），可以设置 `resolve.symlinks: false`
+- 如果你使用自定义 resolve plugin 规则，并且没有指定 context 上下文，可以设置 `resolve.cacheWithContext: false`
+
+#### dll
+
+使用 `DllPlugin` 为更改不频繁的代码生成单独的编译结果。这可以提高应用程序的编译速度，尽管它增加了构建过程的复杂度
+
+#### 小即是快(smaller = faster)
+
+减少编译结果的整体大小，以提高构建性能。尽量保持 chunk 体积小
+
+- 使用数量更少/体积更小的 library
+- 在多页面应用程序中使用 `SplitChunksPlugin`
+- 在多页面应用程序中使用 `SplitChunksPlugin `，并开启 `async` 模式
+- 移除未引用代码
+- 只编译你当前正在开发的那些代码
+
+#### worker 池(worker pool)
+
+`thread-loader` 可以将非常消耗资源的 loader 分流给一个 worker pool
+
+#### 持久化缓存
+
+在 webpack 配置中使用 [`cache`](https://webpack.docschina.org/configuration/cache) 选项，使用 `package.json` 中的 `"postinstall"` 清除缓存目录
+
+#### 自定义 plugin/loader
+
+对它们进行概要分析，以免在此处引入性能问题
+
+#### Progress plugin
+
+将 `ProgressPlugin` 从 webpack 中删除，可以缩短构建时间。请注意，`ProgressPlugin` 可能不会为快速构建提供太多价值，因此，请权衡利弊再使用
+
+### 开发环境
+
+使用 webpack 的 watch mode(监听模式)。而不使用其他工具来 watch 文件和调用 webpack 。内置的 watch mode 会记录时间戳并将此信息传递给 compilation 以使缓存失效
+
+在某些配置环境中，watch mode 会回退到 poll mode(轮询模式)。监听许多文件会导致 CPU 大量负载。在这些情况下，可以使用 `watchOptions.poll` 来增加轮询的间隔时间
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
