@@ -73,6 +73,7 @@ var sayhello = (name) => {
 };
 
 async function action() {
+  // 为什么不用数组的 map 方法，而用 for，因为 map 是并行，for 是串行
   for (let i = 0; i < arr.length; i++) {
     await sayhello(arr[i]);
   }
