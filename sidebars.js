@@ -177,7 +177,11 @@ module.exports = {
     },
     "Navigation",
     "WebStorm",
-    "Webpack/Webpack",
+    {
+      type: "category",
+      label: "Webpack",
+      items: ["Webpack/Webpack", "Webpack/configuration"],
+    },
     "Fiddler/Fiddler",
   ],
   end: ["Node", "Express"],
