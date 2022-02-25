@@ -58,3 +58,27 @@ function random_str(length) {
 random_str(6) // "NdQKOr"
 ```
 
+异步解决方案
+
+```js
+var arr = ["first", "second", "third"];
+
+var sayhello = (name) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log(name);
+      resolve();
+    }, 1000);
+  });
+};
+
+async function action() {
+  for (let i = 0; i < arr.length; i++) {
+    await sayhello(arr[i]);
+  }
+  console.log("end");
+}
+
+action();
+```
+
