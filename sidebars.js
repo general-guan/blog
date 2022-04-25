@@ -183,6 +183,7 @@ module.exports = {
       items: ["Webpack/Webpack", "Webpack/configuration"],
     },
     "Fiddler/Fiddler",
+    "PM2/PM2",
   ],
   end: ["Node", "Express"],
 };
