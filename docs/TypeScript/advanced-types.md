@@ -44,7 +44,7 @@ handleEvent(document.getElementById('world'), 'dblclick'); // 报错，event 不
 
 ## 映射类型
 
-### Partial\<T>（部分的）
+### Partial<T>（部分的）
 
 属性全部变为可选属性
 
@@ -65,7 +65,7 @@ type Patial<T> = {
 }
 ```
 
-### Required\<T>（必须的）
+### Required<T>（必须的）
 
 属性全部变为必须属性
 
@@ -87,7 +87,7 @@ type Required<T> = {
 }
 ```
 
-### Readonly\<T>（只读的）
+### Readonly<T>（只读的）
 
 属性全部变为只读属性
 
@@ -225,7 +225,7 @@ const student1: Extract<StudentAttr, PersonAttr> // 'name' | 'age'
 type Extract<T, U> = T extends U ? T : never;
 ```
 
-### NonNullable\<T>（不能为null）
+### NonNullable<T>（不能为null）
 
 剔除 `null`、`undefined`
 
@@ -239,7 +239,7 @@ type A = NonNullable<Foo>; // 'a' | 'b'
 type NonNullable<T> = T extends null | undefined ? never : T;
 ```
 
-### Parameters\<T>（参数）
+### Parameters<T>（参数）
 
 获取传入函数的参数组成的类型
 
@@ -261,7 +261,7 @@ const student1: Parameters<StudentFunc> // [name: string, age: number]
 type Parameters<T extends (...args: any) => any> = T extends (...args: infer P) => any ? P : never;
 ```
 
-### ConstructorParameters\<T>（构造参数）
+### ConstructorParameters<T>（构造参数）
 
 获取传入构造函数的参数组成的类型
 
@@ -283,7 +283,7 @@ const student1: ConstructorParameters<StudentConstructor> // [name: string, age:
 type ConstructorParameters<T extends abstract new (...args: any) => any> = T extends abstract new (...args: infer P) => any ? P : never;
 ```
 
-### ReturnType\<T>（返回类型）
+### ReturnType<T>（返回类型）
 
 获取传入函数的返回类型
 
@@ -305,7 +305,7 @@ const student1: ReturnType<StudentFunc> = {} // Student
 type ReturnType<T extends (...args: any) => any> = T extends (...args: any) => infer R ? R : any;
 ```
 
-### InstanceType\<T>（构造返回类型、实例类型）
+### InstanceType<T>（构造返回类型、实例类型）
 
 获取传入构造函数的返回类型
 
@@ -330,7 +330,7 @@ const student1: InstanceType<typeof Student> = new Student('张三', 20)
 type InstanceType<T extends abstract new (...args: any) => any> = T extends abstract new (...args: any) => infer R ? R : any;
 ```
 
-### Uppercase\<T>（大写）
+### Uppercase<T>（大写）
 
 变大写
 
@@ -345,7 +345,7 @@ const studentSex: Uppercase<StudentSexType> = 'MALE'
 type Uppercase<S extends string> = intrinsic;
 ```
 
-### Lowercase\<T>（小写）
+### Lowercase<T>（小写）
 
 变小写
 
@@ -360,7 +360,7 @@ const studentSex: Lowercase<StudentSexType> = 'male'
 type Lowercase<S extends string> = intrinsic;
 ```
 
-### Capitalize\<T>（首字母大写）
+### Capitalize<T>（首字母大写）
 
 首字母变大写
 
@@ -375,7 +375,7 @@ const studentSex: Capitalize<StudentSexType> = 'Male'
 type Capitalize<S extends string> = intrinsic;
 ```
 
-### Uncapitalize\<T>（首字母小写）
+### Uncapitalize<T>（首字母小写）
 
 首字母变小写
 
