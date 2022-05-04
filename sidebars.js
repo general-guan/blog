@@ -100,6 +100,7 @@ module.exports = {
         "TypeScript/advanced-types",
         "TypeScript/lint",
         "TypeScript/thanks",
+        "TypeScript/interview",
       ],
     },
     {
