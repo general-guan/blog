@@ -68,7 +68,12 @@ module.exports = {
         },
         {
           type: "category",
-          label: "BOM",
+          label: "DOM",
+          items: ["JavaScript/dom/general", "JavaScript/dom/node"],
+        },
+        {
+          type: "category",
+          label: "浏览器模型",
           items: ["JavaScript/bom/window"],
         },
         "JavaScript/common",
