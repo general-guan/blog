@@ -353,6 +353,102 @@ DOMComb(document.body, console.log)
 
 上面代码中，`DOMComb` 函数的第一个参数是某个指定的节点，第二个参数是回调函数，这个回调函数会依次作用于指定节点，以及指定节点的所有后代节点
 
+### Node.prototype.cloneNode()
+
+`cloneNode` 方法用于克隆一个节点，它接受一个布尔值作为参数，表示是否同时克隆子节点，它的返回值是一个克隆出来的新节点
+
+```js
+var cloneUL = document.querySelector('ul').cloneNode(true);
+```
+
+该方法有一些使用注意点
+
+（1）克隆一个节点，会拷贝该节点的所有属性，但是会丧失 `addEventListener` 方法和 `on-` 属性（即 `node.onclick = fn`），添加在这个节点上的事件回调函数
+
+（2）该方法返回的节点不在文档之中，即没有任何父节点，必须使用诸如 `Node.appendChild` 这样的方法添加到文档之中
+
+（3）克隆一个节点之后，DOM 有可能出现两个有相同 `id` 属性（即 `id="xxx"`）的网页元素，这时应该修改其中一个元素的 `id` 属性，如果原节点有 `name` 属性，可能也需要修改
+
+### Node.prototype.insertBefore()
+
+`insertBefore` 方法用于将某个节点插入父节点内部的指定位置
+
+```js
+var insertedNode = parentNode.insertBefore(newNode, referenceNode);
+```
+
+`insertBefore` 方法接受两个参数，第一个参数是所要插入的节点 `newNode`，第二个参数是父节点 `parentNode` 内部的一个子节点 `referenceNode`，`newNode` 将插在 `referenceNode` 这个子节点的前面，返回值是插入的新节点 `newNode`
+
+```js
+var p = document.createElement('p');
+document.body.insertBefore(p, document.body.firstChild);
+```
+
+上面代码中，新建一个 `<p>` 节点，插在 `document.body.firstChild` 的前面，也就是成为 `document.body` 的第一个子节点
+
+如果 `insertBefore` 方法的第二个参数为 `null`，则新节点将插在当前节点内部的最后位置，即变成最后一个子节点
+
+```js
+var p = document.createElement('p');
+document.body.insertBefore(p, null);
+```
+
+上面代码中，`p` 将成为 `document.body` 的最后一个子节点，这也说明 `insertBefore` 的第二个参数不能省略
+
+注意，如果所要插入的节点是当前 DOM 现有的节点，则该节点将从原有的位置移除，插入新的位置
+
+由于不存在 `insertAfter` 方法，如果新节点要插在父节点的某个子节点后面，可以用`insertBefore`方法结合`nextSibling`属性模拟
+
+```js
+parent.insertBefore(s1, s2.nextSibling);
+```
+
+上面代码中，`parent` 是父节点，`s1` 是一个全新的节点，`s2` 是可以将 `s1` 节点，插在 `s2` 节点的后面，如果 `s2` 是当前节点的最后一个子节点，则 `s2.nextSibling` 返回 `null`，这时 `s1` 节点会插在当前节点的最后，变成当前节点的最后一个子节点，等于紧跟在 `s2` 的后面
+
+如果要插入的节点是 `DocumentFragment` 类型，那么插入的将是 `DocumentFragment` 的所有子节点，而不是 `DocumentFragment` 节点本身，返回值将是一个空的 `DocumentFragment` 节点
+
+### Node.prototype.removeChild()
+
+`removeChild` 方法接受一个子节点作为参数，用于从当前节点移除该子节点，返回值是移除的子节点
+
+```js
+var divA = document.getElementById('A');
+divA.parentNode.removeChild(divA);
+```
+
+上面代码移除了 `divA` 节点，注意，这个方法是在 `divA` 的父节点上调用的，不是在 `divA` 上调用的
+
+下面是如何移除当前节点的所有子节点
+
+```js
+var element = document.getElementById('top');
+while (element.firstChild) {
+  element.removeChild(element.firstChild);
+}
+```
+
+被移除的节点依然存在于内存之中，但不再是 DOM 的一部分，所以，一个节点移除以后，依然可以使用它，比如插入到另一个节点下面
+
+如果参数节点不是当前节点的子节点，`removeChild` 方法将报错
+
+### Node.prototype.replaceChild()
+
+`replaceChild` 方法用于将一个新的节点，替换当前节点的某一个子节点
+
+```js
+var replacedNode = parentNode.replaceChild(newChild, oldChild);
+```
+
+上面代码中，`replaceChild` 方法接受两个参数，第一个参数 `newChild` 是用来替换的新节点，第二个参数 `oldChild` 是将要替换走的子节点。返回值是替换走的那个节点 `oldChild`
+
+
+
+
+
+
+
+
+
 
 
 
