@@ -69,7 +69,11 @@ module.exports = {
         {
           type: "category",
           label: "DOM",
-          items: ["JavaScript/dom/general", "JavaScript/dom/node"],
+          items: [
+            "JavaScript/dom/general",
+            "JavaScript/dom/node",
+            "JavaScript/dom/nodelist",
+          ],
         },
         {
           type: "category",

@@ -441,37 +441,135 @@ var replacedNode = parentNode.replaceChild(newChild, oldChild);
 
 上面代码中，`replaceChild` 方法接受两个参数，第一个参数 `newChild` 是用来替换的新节点，第二个参数 `oldChild` 是将要替换走的子节点。返回值是替换走的那个节点 `oldChild`
 
+```js
+var divA = document.getElementById('divA');
+var newSpan = document.createElement('span');
+newSpan.textContent = 'Hello World!';
+divA.parentNode.replaceChild(newSpan, divA);
+```
 
+上面代码是如何将指定节点 `divA` 替换走
 
+### Node.prototype.contains()
 
+`contains` 方法返回一个布尔值，表示参数节点是否满足以下三个条件之一
 
+- 参数节点为当前节点
+- 参数节点为当前节点的子节点
+- 参数节点为当前节点的后代节点
 
+```js
+document.body.contains(node)
+```
 
+上面代码检查参数节点 `node`，是否包含在当前文档之中
 
+注意，当前节点传入 `contains` 方法，返回 `true`
 
+```js
+nodeA.contains(nodeA) // true
+```
 
+### Node.prototype.compareDocumentPosition()
 
+`compareDocumentPosition` 方法的用法，与 `contains` 方法完全一致，返回一个六个比特位的二进制值，表示参数节点与当前节点的关系
 
+| 二进制值 | 十进制值 | 含义                                               |
+| -------- | -------- | -------------------------------------------------- |
+| 000000   | 0        | 两个节点相同                                       |
+| 000001   | 1        | 两个节点不在同一个文档（即有一个节点不在当前文档） |
+| 000010   | 2        | 参数节点在当前节点的前面                           |
+| 000100   | 4        | 参数节点在当前节点的后面                           |
+| 001000   | 8        | 参数节点包含当前节点                               |
+| 010000   | 16       | 当前节点包含参数节点                               |
+| 100000   | 32       | 浏览器内部使用                                     |
 
+```js
+// HTML 代码如下
+// <div id="mydiv">
+//   <form><input id="test" /></form>
+// </div>
 
+var div = document.getElementById('mydiv');
+var input = document.getElementById('test');
 
+div.compareDocumentPosition(input) // 20
+input.compareDocumentPosition(div) // 10
+```
 
+上面代码中，节点 `div` 包含节点 `input`（二进制 `010000`），而且节点 `input` 在节点 `div` 的后面（二进制 `000100`），所以第一个 `compareDocumentPosition` 方法返回 `20`（二进制 `010100`，即 `010000 + 000100`），第二个 `compareDocumentPosition` 方法返回`10`（二进制 `001010`）
 
+由于 `compareDocumentPosition` 返回值的含义，定义在每一个比特位上，所以如果要检查某一种特定的含义，就需要使用比特位运算符
 
+```js
+var head = document.head;
+var body = document.body;
+if (head.compareDocumentPosition(body) & 4) {
+  console.log('文档结构正确');
+} else {
+  console.log('<body> 不能在 <head> 前面');
+}
+```
 
+上面代码中，`compareDocumentPosition` 的返回值与 `4`（又称掩码）进行与运算（`&`），得到一个布尔值，表示 `<head>` 是否在 `<body>` 前面
 
+### Node.prototype.isEqualNode()，Node.prototype.isSameNode()
 
+`isEqualNode` 方法返回一个布尔值，用于检查两个节点是否相等，所谓相等的节点，指的是两个节点的类型相同、属性相同、子节点相同
 
+```js
+var p1 = document.createElement('p');
+var p2 = document.createElement('p');
 
+p1.isEqualNode(p2) // true
+```
 
+`isSameNode` 方法返回一个布尔值，表示两个节点是否为同一个节点
 
+```js
+var p1 = document.createElement('p');
+var p2 = document.createElement('p');
 
+p1.isSameNode(p2) // false
+p1.isSameNode(p1) // true
+```
 
+### Node.prototype.normalize()
 
+`normalize` 方法用于清理当前节点内部的所有文本节点（text）。它会去除空的文本节点，并且将毗邻的文本节点合并成一个，也就是说不存在空的文本节点，以及毗邻的文本节点
 
+```js
+var wrapper = document.createElement('div');
 
+wrapper.appendChild(document.createTextNode('Part 1 '));
+wrapper.appendChild(document.createTextNode('Part 2 '));
 
+wrapper.childNodes.length // 2
+wrapper.normalize();
+wrapper.childNodes.length // 1
+```
 
+上面代码使用 `normalize` 方法之前，`wrapper` 节点有两个毗邻的文本子节点，使用 `normalize` 方法之后，两个文本子节点被合并成一个
+
+该方法是 `Text.splitText` 的逆方法
+
+### Node.prototype.getRootNode()
+
+`getRootNode()` 方法返回当前节点所在文档的根节点 `document`，与 `ownerDocument` 属性的作用相同
+
+```js
+document.body.firstChild.getRootNode() === document
+// true
+document.body.firstChild.getRootNode() === document.body.firstChild.ownerDocument
+// true
+```
+
+该方法可用于 `document` 节点自身，这一点与 `document.ownerDocument` 不同
+
+```js
+document.getRootNode() // document
+document.ownerDocument // null
+```
 
 
 
