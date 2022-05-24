@@ -128,6 +128,11 @@ module.exports = {
     },
     {
       type: "category",
+      label: "React",
+      items: ["React/hook"],
+    },
+    {
+      type: "category",
       label: "工程化",
       items: ["Engineering/Vue3"],
     },
