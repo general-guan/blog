@@ -257,7 +257,7 @@ program
     .command('create <app-name>')
     .description('create a new project')
     .action((appName) => {
-        download('WilliamGjj/website', appName, (err) => {
+        download('general-guan/website', appName, (err) => {
             if (err) {
                 console.log('下载失败');
                 return

@@ -109,6 +109,11 @@ module.exports = {
     },
     {
       type: "category",
+      label: "ESLint",
+      items: ["ESLint/plugin"],
+    },
+    {
+      type: "category",
       label: "Web API",
       items: ["WebAPI/file", "WebAPI/thanks"],
     },
