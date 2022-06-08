@@ -14,14 +14,7 @@ module.exports = {
     {
       type: "category",
       label: "CSS",
-      items: [
-        "CSS/CSS",
-        "CSS/common",
-        "CSS/skill",
-        "CSS/text/text",
-        "CSS/flex/flex",
-        "CSS/interview",
-      ],
+      items: ["CSS/CSS", "CSS/common", "CSS/skill", "CSS/text/text", "CSS/flex/flex", "CSS/interview"],
     },
     {
       type: "category",
@@ -43,13 +36,7 @@ module.exports = {
         {
           type: "category",
           label: "运算符",
-          items: [
-            "JavaScript/operators/arithmetic",
-            "JavaScript/operators/comparison",
-            "JavaScript/operators/boolean",
-            "JavaScript/operators/bit",
-            "JavaScript/operators/priority",
-          ],
+          items: ["JavaScript/operators/arithmetic", "JavaScript/operators/comparison", "JavaScript/operators/boolean", "JavaScript/operators/bit", "JavaScript/operators/priority"],
         },
         {
           type: "category",
@@ -69,11 +56,7 @@ module.exports = {
         {
           type: "category",
           label: "DOM",
-          items: [
-            "JavaScript/dom/general",
-            "JavaScript/dom/node",
-            "JavaScript/dom/nodelist",
-          ],
+          items: ["JavaScript/dom/general", "JavaScript/dom/node", "JavaScript/dom/nodelist"],
         },
         {
           type: "category",
@@ -120,11 +103,7 @@ module.exports = {
     {
       type: "category",
       label: "设计模式",
-      items: [
-        "Design-Pattern/Abstract-Factory",
-        "Design-Pattern/Observer",
-        "Design-Pattern/Strategy",
-      ],
+      items: ["Design-Pattern/Abstract-Factory", "Design-Pattern/Observer", "Design-Pattern/Strategy"],
     },
     {
       type: "category",
@@ -135,6 +114,11 @@ module.exports = {
       type: "category",
       label: "React",
       items: ["React/hook"],
+    },
+    {
+      type: "category",
+      label: "Umi",
+      items: ["Umi/tailwind-css"],
     },
     {
       type: "category",
