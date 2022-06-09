@@ -2,10 +2,10 @@
 
 ## 安装依赖
 
-目前，Umi 的稳定版本是 `3.5.25` ，其（[@umijs/bundler-webpack](https://link.zhihu.com/?target=https%3A//github.com/umijs/umi/blob/master/packages/bundler-webpack/package.json)）使用的 PostCSS 版本为 `7.0.39` ，而 Tailwind 依赖 PostCSS 的版本为 `8.x.x` 。因此，我们需要安装兼容 PostCSS 7 的 Tailwind 版本
+目前，Umi 的稳定版本是 `3.5.25` ，其（[@umijs/bundler-webpack](https://link.zhihu.com/?target=https%3A//github.com/umijs/umi/blob/master/packages/bundler-webpack/package.json)）使用的 PostCSS 版本为 `7.0.39` ，而 Tailwind 依赖 PostCSS 的版本为 `8.x.x` 。因此，我们需要安装兼容 PostCSS 7 的 Tailwind 版本（因为 `umi` 自带`postcss`、`autoprefixer`，所有无需安装）
 
 ```bash
-npm install -D tailwindcss@npm:@tailwindcss/postcss7-compat
+yarn add -D tailwindcss@npm:@tailwindcss/postcss7-compat
 ```
 
 ## 添加 Tailwind 配置
@@ -78,11 +78,22 @@ export default defineConfig({
 @tailwind utilities;
 ```
 
+## 修复工具类无法生成的问题
 
+在开启 JIT 模式后，会遇到工具类无法生成的问题。
 
+查看相关 [Issue](https://link.zhihu.com/?target=https%3A//github.com/tailwindlabs/tailwindcss/issues/5132%23issuecomment-894549642) 得知，该问题只会在 PostCSS 7 开启 JIT 模式出现，因为 PostCSS 7 不支持 `dir-dependency` 的消息类型
 
+该问题的具体解决办法是在执行 `umi start` 命令时，配置 `TAILWIND_MODE=watch` 的环境变量
 
-
+```json
+// package.json
+{
+  "script": {
+    "start": "TAILWIND_MODE=watch umi dev"
+  }
+}
+```
 
 
 
