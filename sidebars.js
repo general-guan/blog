@@ -139,6 +139,11 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Umi",
+      items: ["Umi/tailwind-css"],
+    },
+    {
+      type: "category",
       label: "工程化",
       items: ["Engineering/Vue3"],
     },
@@ -177,6 +182,11 @@ module.exports = {
       type: "category",
       label: "Github",
       items: ["Github/ssh"],
+    },
+    {
+      type: "category",
+      label: "VSCode",
+      items: ["VSCode/theme/theme"],
     },
     {
       type: "category",
