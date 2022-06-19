@@ -103,6 +103,7 @@ module.exports = {
         "TypeScript/enums",
         "TypeScript/advanced-types",
         "TypeScript/lint",
+        "TypeScript/extends",
         "TypeScript/thanks",
         "TypeScript/interview",
       ],
