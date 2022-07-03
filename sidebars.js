@@ -147,6 +147,11 @@ module.exports = {
       label: "工程化",
       items: ["Engineering/Vue3"],
     },
+    {
+      type: "category",
+      label: "Three",
+      items: ["Three/Three"],
+    },
     "Performance-Optimization/Performance-Optimization",
     "Security",
     {
