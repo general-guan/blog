@@ -209,6 +209,7 @@ module.exports = {
         "Interview/Handle/Handle",
         "Interview/Other/Other",
         "Interview/Interview",
+        "Interview/InterviewGuide",
         "Interview/HighFrequency/HighFrequency",
       ],
     },
