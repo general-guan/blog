@@ -195,6 +195,11 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Vim",
+      items: ["Vim/key-map", "Vim/Neovim/config"],
+    },
+    {
+      type: "category",
       label: "面试",
       items: [
         "Interview/HTML/HTML",
