@@ -201,6 +201,12 @@ function myInstanceof(left, right) {
 
 ### call、apply、bind
 
+`call`、`apply`、`bind` 都是用来改变 `this` 的指向
+
+- `call` 与 `apply` 唯一的区别就是它们的传参方式不同，`call` 从第二个参数开始都是传给函数的，`apply` 只有两个参数，第二个参数是一个数组，传给函数的参数都写在这个数组里面
+- `call` 与 `apply` 改变了函数的 `this` 指向后会立即执行，而 `bind` 是改变函数的 `this` 指向并返回这个这个函数，不会立即执行
+- `call` 与 `apply` 的返回值是函数的执行结果，`bind` 的返回值是改变了 `this` 指向的函数的拷贝
+
 ### 原型/继承
 
 ### 深浅拷贝
