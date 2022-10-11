@@ -248,7 +248,21 @@ function unique(arr) {
 }
 ```
 
+## 深拷贝
 
-
-
-
+```js
+function deepClone(target, hash = new WeakMap()) {
+  if (typeof target !== "object" || typeof target === null) {
+    return target;
+  }
+  let cloneTarget = Array.isArray(target) ? [] : {};
+  if (hash.has(target)) {
+    return hash.get(target);
+  }
+  hash.set(target, cloneTarget);
+  for (const key in target) {
+    cloneTarget[key] = deepClone(target[key], hash);
+  }
+  return cloneTarget;
+}
+```
