@@ -9,7 +9,7 @@ module.exports = {
     {
       type: "category",
       label: "HTML",
-      items: ["HTML/meta", "HTML/interview"],
+      items: ["HTML/canvas", "HTML/meta", "HTML/interview"],
     },
     {
       type: "category",
