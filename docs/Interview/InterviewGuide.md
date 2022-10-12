@@ -209,7 +209,24 @@ function myInstanceof(left, right) {
 
 ### 原型/继承
 
-### 深浅拷贝
+### 深拷贝
+
+```js
+function deepClone(target, hash = new WeakMap()) {
+  if (typeof target !== "object" || typeof target === null) {
+    return target;
+  }
+  let cloneTarget = Array.isArray(target) ? [] : {};
+  if (hash.has(target)) {
+    return hash.get(target);
+  }
+  hash.set(target, cloneTarget);
+  for (const key in target) {
+    cloneTarget[key] = deepClone(target[key], hash);
+  }
+  return cloneTarget;
+}
+```
 
 ### 事件机制、Event Loop
 
@@ -224,6 +241,272 @@ function myInstanceof(left, right) {
 ## TypeScript
 
 ## Vue
+
+### 路由实现原理
+
+我们都知道一个 URL 是由很多部分组成，包括协议、域名、路径、query、hash 等，比如上面的例子，我们点击不同模块的时候可能看到是这样的 URL
+
+- 首页：yourdomain.xxx.com/index.html/#/
+- 商城：yourdomain.xxx.com/index.html/#/shop
+- 购物车：yourdomain.xxx.com/index.html/#/shopping-cart
+- 我的：yourdomain.xxx.com/index.html/#/mine
+
+\# 号后面的，就是一个 URL 中关于 hash 的组成部分，可以看到，不同路由对应的 hash 是不一样的，但是它们都是在访问同一个静态资源 index.html，我们要做的，就是如何能够监听到 URL 中关于 hash 部分发生的变化，从而做出对应的改变
+
+其实浏览器已经暴露给我们一个现成的方法 **hashchange**，在 hash 改变的时候，触发该事件，有了监听事件，且改变 hash 页面并不刷新，这样我们就可以在监听事件的回调函数中，执行我们展示和隐藏不同 UI 显示的功能，从而实现前端路由
+
+下面是关于 hash 路由的核心实现，可以看出来，主要就是监听 hash 的变化，渲染不同的组件代码
+
+#### hash
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"
+      name="viewport"
+    />
+    <title>实现简单的hash路由</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      #content {
+        height: calc(100vh - 50px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3em;
+      }
+      #nav {
+        height: 50px;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+      }
+      #nav a {
+        width: 25%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid black;
+      }
+      #nav a:not(:last-of-type) {
+        border-right: none;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="content"></main>
+    <nav id="nav">
+      <a href="#/">首页</a>
+      <a href="#/shop">商城</a>
+      <a href="#/shopping-cart">购物车</a>
+      <a href="#/mine">我的</a>
+    </nav>
+  </body>
+  <script>
+    class VueRouter {
+      constructor(routes = []) {
+        this.routes = routes; // 路由映射
+        this.currentHash = ""; // 当前的hash
+        this.refresh = this.refresh.bind(this);
+        window.addEventListener("load", this.refresh, false);
+        window.addEventListener("hashchange", this.refresh, false);
+      }
+
+      getUrlPath(url) {
+        // 获取hash
+        return url.indexOf("#") >= 0 ? url.slice(url.indexOf("#") + 1) : "/";
+      }
+
+      refresh(event) {
+        // URL hash发生改变的时候，拿到当前的hash
+        let newHash = "",
+          oldHash = null;
+        if (event.newURL) {
+          oldHash = this.getUrlPath(event.oldURL || "");
+          newHash = this.getUrlPath(event.newURL || "");
+        } else {
+          newHash = this.getUrlPath(window.location.hash);
+        }
+        this.currentHash = newHash;
+        this.matchComponent();
+      }
+
+      matchComponent() {
+        let curRoute = this.routes.find(
+          (route) => route.path === this.currentHash
+        );
+        if (!curRoute) {
+          // 当前URL中的hash不存在的时候，默认取第一个，当然真实场景下，可能会有各种情况，取决于业务逻辑
+          curRoute = this.routes.find((route) => route.path === "/");
+        }
+        const { component } = curRoute;
+        document.querySelector("#content").innerHTML = component;
+      }
+    }
+
+    const router = new VueRouter([
+      {
+        path: "/",
+        name: "home",
+        component: "<div>首页内容</div>",
+      },
+      {
+        path: "/shop",
+        name: "shop",
+        component: "<div>商城内容</div>",
+      },
+      {
+        path: "/shopping-cart",
+        name: "shopping-cart",
+        component: "<div>购物车内容</div>",
+      },
+      {
+        path: "/mine",
+        name: "mine",
+        component: "<div>我的内容</div>",
+      },
+    ]);
+  </script>
+</html>
+```
+
+#### history
+
+history 路由模式的实现，是要归功于 HTML5 提供的一个 history 全局对象，可以将它理解为其中包含了关于我们访问网页（历史会话）的一些信息，同时它还暴露了一些有用的方法，比如：
+
+- window.history.go 可以跳转到浏览器会话历史中的指定的某一个记录页
+- window.history.forward 指向浏览器会话历史中的下一页，跟浏览器的前进按钮相同
+- window.history.back 返回浏览器会话历史中的上一页，跟浏览器的回退按钮功能相同
+- window.history.pushState 可以将给定的数据压入到浏览器会话历史栈中
+- window.history.replaceState 将当前的会话页面的 url 替换成指定的数据
+
+而 history 路由的实现，主要就是依靠于 pushState 与 replaceState 实现的，这里我们先总结下它们的一些特点
+
+- 都会改变当前页面显示的 url，但都不会刷新页面
+- pushState 是压入浏览器的会话历史栈中，会使得 history.length 加 1，而 replaceState 是替换当前的这条会话历史，因此不会增加 history.length
+
+既然已经能够通过 pushState 或 replaceState 实现改变 URL 而不刷新页面，那么是不是如果我们能够监听到改变 URL 这个动作，就可以实现前端渲染逻辑的处理呢？这个时候，我们还要了解一个事件处理程序 popstate，先看下它的官方定义
+
+> 每当激活同一文档中不同的历史记录条目时，`popstate` 事件就会在对应的 `window` 对象上触发，如果当前处于激活状态的历史记录条目是由 `history.pushState()` 方法创建的或者是由 `history.replaceState()` 方法修改的，则 `popstate` 事件的 `state` 属性包含了这个历史记录条目的 `state` 对象的一个拷贝
+>
+> 调用 `history.pushState()` 或者 `history.replaceState()` 不会触发 `popstate` 事件，`popstate` 事件只会在浏览器某些行为下触发，比如点击后退按钮（或者在 JavaScript 中调用 `history.back()` 方法），即，在同一文档的两个历史记录条目之间导航会触发该事件
+
+这里我用大白话总结下就是以下几点
+
+- history.pushState 和 history.replaceState 方法是不会触发 popstate 事件的
+- 但是浏览器的某些行为会导致 popstate，比如 go、back、forward
+- popstate 事件对象中的 state 属性，可以理解是我们在通过 history.pushState 或 history.replaceState 方法时，传入的指定的数据
+
+说了一大堆，结果却是 popstate 无法监听 history.pushState 和 history.replaceState 方法，这不是扯呢吗？那好吧，既然你厂商没实现此功能，那么我自己重新写下你这个 history.pushState 和 history.replaceState 方法吧，让你在这个方法中，也能够暴露出自定义的全局事件，然后我再监听自定义的事件，不就行了？
+
+改写：
+
+```js
+let _wr = function (type) {
+  let orig = history[type];
+  return function () {
+    let e = new Event(type);
+    e.arguments = arguments;
+    window.dispatchEvent(e);
+    let rv = orig.apply(this, arguments);
+    return rv;
+  };
+};
+
+history.pushState = _wr("pushState");
+history.replaceState = _wr("replaceState");
+```
+
+简易实现：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"
+      name="viewport"
+    />
+    <title>实现简单的history路由</title>
+  </head>
+  <body>
+    <main id="div"></main>
+    <button id="button1">首页</button>
+    <button id="button2">商城</button>
+    <button id="button3">购物车</button>
+    <button id="button4">我的</button>
+  </body>
+  <script>
+    const button1 = document.querySelector("#button1");
+    const button2 = document.querySelector("#button2");
+    const button3 = document.querySelector("#button3");
+    const button4 = document.querySelector("#button4");
+
+    let _wr = function (type) {
+      let orig = history[type];
+      return function () {
+        let e = new Event(type);
+        e.arguments = arguments;
+        window.dispatchEvent(e);
+        let rv = orig.apply(this, arguments);
+        return rv;
+      };
+    };
+
+    history.pushState = _wr("pushState");
+    history.replaceState = _wr("replaceState");
+
+    button1.addEventListener("click", () => {
+      history.pushState({ state: 1 }, null, "./home");
+    });
+
+    button2.addEventListener("click", () => {
+      history.pushState({ state: 2 }, null, "./shop");
+    });
+
+    button3.addEventListener("click", () => {
+      history.pushState({ state: 3 }, null, "./shopping-cart");
+    });
+
+    button4.addEventListener("click", () => {
+      history.pushState({ state: 4 }, null, "./mine");
+    });
+
+    window.addEventListener("pushState", (e) => {
+      // 监听pushState自定义事件，拿到上面通过pushState的参数，做出对应的页面渲染，处理的思路与hash雷同
+      console.log(e.arguments);
+    });
+  </script>
+</html>
+```
+
+刷新 404：
+
+hash 模式是不需要后端服务配合的。但是 history 模式下，如果你再跳转路由后再次刷新会得到 404 的错误，这个错误说白了就是浏览器会把整个地址当成一个可访问的静态资源路径进行访问，然后服务端并没有这个文件
+
+所以一般情况下，我们都需要配置下 nginx，告诉服务器，当我们访问的路径资源不存在的时候，默认指向静态资源 index.html
+
+```nginx
+location / {
+  try_files $uri $uri/ /index.html;
+}
+```
 
 ## React
 
