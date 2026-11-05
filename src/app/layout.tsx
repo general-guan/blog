@@ -22,8 +22,19 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {/* 首屏渲染前把系统配色写到 data-theme 上，zenn-content-css 的暗色样式依赖它。
+            suppressHydrationWarning 是因为该脚本会在 hydration 前改动 <html> 的属性 */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';",
+          }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

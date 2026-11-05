@@ -24,3 +24,266 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* <embed-mermaid> 自定义元素：白底卡片承载图表，两种主题下都可读 */
+embed-mermaid {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  margin: 1.75rem 0;
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid #e4e4e7;
+  border-radius: 0.75rem;
+}
+
+embed-mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ===== 文章页外壳（1:1 复刻 zenn.dev 文章页） =====
+   颜色值取自 zenn.dev 线上 CSS 变量（light / dark-blue 两套主题） */
+:root {
+  --z-bg-outer: #edf2f7; /* 页面背景 --c-bg-base-outer */
+  --z-bg-inner: #fff; /* 卡片/目次面板背景 --c-bg-base-inner */
+  --z-border: #e4edf4; /* 描边 --c-neutral-border-lighter */
+  --z-text-body: rgb(0 0 0 / 82%); /* 正文文字 --c-text-body */
+  --z-text-sub: #65717b; /* 次要文字 --c-text-low-priority */
+  --z-line: #e0efff; /* 目次竖向连线 --c-bg-primary */
+  --z-dot-h2: #bfdcff; /* h2 圆点 --c-blue-400 */
+  --z-dot-h3: #cfe5ff; /* h3 圆点 --c-blue-350 */
+  --z-active: #3ea8ff; /* 当前区块高亮 --c-general-primary */
+}
+
+:root[data-theme="dark"] {
+  --z-bg-outer: #081d35; /* --c-dark-blue-1200 */
+  --z-bg-inner: #0d223a; /* --c-dark-blue-1100 */
+  --z-border: #1b324a; /* --c-dark-gray-1100 */
+  --z-text-body: #ecf5ff;
+  --z-text-sub: #a4bcd5;
+  --z-line: #05458a; /* --c-blue-900 */
+  --z-dot-h2: #05458a;
+  --z-dot-h3: #05458a;
+  --z-active: #0f83fd; /* --c-blue-600 */
+}
+
+.article-view {
+  flex: 1;
+  background: var(--z-bg-outer);
+  border-top: 1px solid var(--z-border);
+  padding-bottom: 4rem;
+}
+
+.article-container {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 40px;
+}
+
+.article-columns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.article-main {
+  width: 790px;
+  max-width: 100%;
+  background: var(--z-bg-inner);
+  border: solid 1px var(--z-border);
+  border-radius: 4px;
+  padding: 40px 0;
+  font-size: 16px;
+}
+
+/* 标题区：zenn 上它不在白色卡片里，直接坐在页面灰色背景上 */
+.article-header {
+  text-align: center;
+  padding: 3.8rem 0 4rem;
+  line-height: 1.4;
+}
+
+.article-emoji {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 75px;
+}
+
+.article-title {
+  display: inline-block;
+  text-align: left;
+  max-width: 780px;
+  margin: 1.2rem auto 0;
+  font-size: 33px;
+}
+
+.article-body {
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 0 40px;
+}
+
+/* 点击目次后标题停在离视口顶部 62px 处（与 zenn 一致：
+   zenn 的 62px 等于其固定导航栏高度，正文标题不会被遮挡） */
+.article-body :is(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: 62px;
+}
+
+.article-sidebar {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.article-sidebar-sticky {
+  position: sticky;
+  top: 24px;
+}
+
+/* --- 目次面板（zenn.dev 的 ArticleTOC） --- */
+.article-toc {
+  background: var(--z-bg-inner);
+  border: solid 1px var(--z-border);
+  border-radius: 4px;
+  max-height: calc(100vh - 50px);
+  padding: 20px 20px 25px;
+  overflow: auto;
+}
+
+.article-toc-title {
+  letter-spacing: 1px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.article-toc-list {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.article-toc-list ol {
+  padding: 0;
+  list-style: none;
+}
+
+.article-toc-list ol,
+.article-toc-list li {
+  position: relative;
+}
+
+.article-toc-list li:before {
+  content: "";
+  border-radius: 99rem;
+  position: absolute;
+}
+
+.article-toc-list a {
+  color: var(--z-text-sub);
+  margin: 8px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 3.05em;
+  overflow: hidden;
+  position: relative;
+  transition: none;
+}
+
+.article-toc-list a:hover,
+.article-toc-list a.active {
+  color: var(--z-text-body);
+}
+
+.article-toc-list .ol-depth-1:before {
+  content: "";
+  background: var(--z-line);
+  border-radius: 0 0 5px 5px;
+  width: 2px;
+  position: absolute;
+  top: 17px;
+  bottom: 8px;
+  left: 5px;
+}
+
+.article-toc-list .ol-depth-1 > li {
+  margin-top: 5px;
+  padding-left: 21px;
+  font-weight: 700;
+  position: relative;
+}
+
+.article-toc-list .ol-depth-1 > li:before {
+  background: var(--z-dot-h2);
+  border: solid 2px var(--z-bg-inner);
+  width: 12px;
+  height: 12px;
+  top: 4px;
+  left: 0;
+}
+
+.article-toc-list .ol-depth-1 > li.active:before {
+  background: var(--z-active);
+  border-color: var(--z-line);
+}
+
+.article-toc-list .ol-depth-2 {
+  font-weight: 400;
+}
+
+.article-toc-list .ol-depth-2 li.active {
+  border-color: var(--z-active);
+}
+
+.article-toc-list .ol-depth-2 li:before {
+  background: var(--z-dot-h3);
+  border: solid 2px var(--z-bg-inner);
+  width: 8px;
+  height: 8px;
+  top: 6px;
+  left: -19px;
+}
+
+.article-toc-list .ol-depth-2 li.active:before {
+  background: var(--z-active);
+  border-color: var(--z-active);
+}
+
+@media screen and (max-width: 992px) {
+  .article-sidebar {
+    display: none;
+  }
+
+  .article-container,
+  .article-body {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .article-main {
+    padding: 35px 0;
+  }
+
+  .article-header {
+    padding: 3.4rem 0 3.2rem;
+  }
+
+  .article-title {
+    font-size: 24px;
+  }
+
+  .article-container,
+  .article-body {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .article-container,
+  .article-body {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}

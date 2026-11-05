@@ -11,7 +11,9 @@
   "dependencies": {
     "next": "16.4.5",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "zenn-content-css": "^0.5.13",
+    "zenn-markdown-html": "^0.5.13"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
