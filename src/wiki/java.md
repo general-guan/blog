@@ -35,7 +35,7 @@ Java ME 就和 Java SE 不同，它是一个针对嵌入式设备的 “瘦身�
 3. 如果要学习大数据开发，那么 Hadoop、Spark、Flink 这些大数据平台就是需要学习的，他们都基于 Java 或 Scala 开发；
 4. 如果想要学习移动开发，那么就深入 Android 平台，掌握 Android App 开发。
 
-### 名词解释
+## 名词解释
 
 - JDK：Java Development Kit
 - JRE：Java Runtime Environment
