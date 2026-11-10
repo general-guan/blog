@@ -45,6 +45,8 @@ embed-mermaid svg {
 /* ===== 文章页外壳（1:1 复刻 zenn.dev 文章页） =====
    颜色值取自 zenn.dev 线上 CSS 变量（light / dark-blue 两套主题） */
 :root {
+  --z-feed-bg: #f1f5f9; /* 首页信息流区块背景 --c-bg-neutral-lighter */
+  --z-bg-emoji: #fff; /* 信息流 emoji 方块背景 --c-bg-emoji */
   --z-bg-outer: #edf2f7; /* 页面背景 --c-bg-base-outer */
   --z-bg-inner: #fff; /* 卡片/目次面板背景 --c-bg-base-inner */
   --z-border: #e4edf4; /* 描边 --c-neutral-border-lighter */
@@ -57,6 +59,8 @@ embed-mermaid svg {
 }
 
 :root[data-theme="dark"] {
+  --z-feed-bg: #0b2c53; /* --c-dark-blue-900 */
+  --z-bg-emoji: #0b2c53; /* --c-dark-blue-900 */
   --z-bg-outer: #081d35; /* --c-dark-blue-1200 */
   --z-bg-inner: #0d223a; /* --c-dark-blue-1100 */
   --z-border: #1b324a; /* --c-dark-gray-1100 */
@@ -66,6 +70,94 @@ embed-mermaid svg {
   --z-dot-h2: #05458a;
   --z-dot-h3: #05458a;
   --z-active: #0f83fd; /* --c-blue-600 */
+}
+
+/* ===== 首页信息流（zenn.dev 文章列表风格） ===== */
+.feed-page {
+  flex: 1;
+  background: var(--z-feed-bg);
+  padding: 48px 0 64px;
+}
+
+.feed-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.feed-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.feed-card {
+  width: 47%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.feed-card-emoji {
+  flex-shrink: 0;
+  width: 92px;
+  height: 92px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--z-bg-emoji);
+  border-radius: 14px;
+  font-size: 42px;
+  line-height: 1;
+}
+
+.feed-card-content {
+  width: calc(100% - 108px);
+}
+
+.feed-card-link {
+  display: block;
+}
+
+.feed-card-title {
+  color: var(--z-text-body);
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  max-height: 4.55em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.feed-card-link:hover .feed-card-title {
+  text-decoration: underline;
+}
+
+.feed-card-meta {
+  margin-top: 0.4rem;
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+}
+
+.feed-card-date {
+  color: var(--z-text-sub);
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 0.07em;
+  font-size: 11.5px;
+}
+
+@media (max-width: 640px) {
+  .feed-card {
+    width: 100%;
+  }
+
+  .feed-grid {
+    gap: 24px;
+  }
 }
 
 .article-view {
@@ -124,10 +216,113 @@ embed-mermaid svg {
   padding: 0 40px;
 }
 
-/* 点击目次后标题停在离视口顶部 62px 处（与 zenn 一致：
-   zenn 的 62px 等于其固定导航栏高度，正文标题不会被遮挡） */
+/* 点击目次后标题停在离视口顶部 62px 处（与 zenn 一致） */
 .article-body :is(h1, h2, h3, h4, h5, h6) {
   scroll-margin-top: 62px;
+}
+
+/* --- 链接卡片（@[card](url)，视觉对齐 zenn 的链接卡片） --- */
+.wiki-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: var(--z-bg-inner);
+  border: 1px solid var(--z-border);
+  border-radius: 4px;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.wiki-card:hover .wiki-card-title {
+  text-decoration: underline;
+}
+
+.wiki-card-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.wiki-card-title {
+  color: var(--z-text-body);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.wiki-card-description {
+  margin-top: 0.3rem;
+  color: var(--z-text-sub);
+  font-size: 13px;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.wiki-card-host {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  color: var(--z-text-sub);
+  font-size: 12px;
+}
+
+.wiki-card-thumb {
+  flex-shrink: 0;
+  width: 110px;
+  align-self: stretch;
+  border-radius: 4px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* --- 文章列表页（/article） --- */
+.article-index-title {
+  margin: 0 0 1.5rem;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.article-index-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.article-index-list li {
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--z-border);
+}
+
+.article-index-list li:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.article-index-link {
+  color: var(--z-text-body);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.article-index-link:hover {
+  color: var(--z-active);
+}
+
+.article-index-slug {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--z-text-sub);
+  font-size: 13px;
 }
 
 .article-sidebar {
@@ -253,6 +448,7 @@ embed-mermaid svg {
     display: none;
   }
 
+  .feed-container,
   .article-container,
   .article-body {
     padding-left: 25px;
@@ -273,6 +469,7 @@ embed-mermaid svg {
     font-size: 24px;
   }
 
+  .feed-container,
   .article-container,
   .article-body {
     padding-left: 20px;
@@ -281,6 +478,7 @@ embed-mermaid svg {
 }
 
 @media screen and (max-width: 480px) {
+  .feed-container,
   .article-container,
   .article-body {
     padding-left: 14px;
