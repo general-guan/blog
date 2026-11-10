@@ -48,7 +48,8 @@ export function ArticleToc({ items }: { items: TocItem[] }) {
 
   const handleClick = (event: ReactMouseEvent<HTMLAnchorElement>, id: string) => {
     event.preventDefault();
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    // 直接定位（zenn 也是瞬时跳转），落点由标题的 scroll-margin-top 控制
+    document.getElementById(id)?.scrollIntoView();
     history.replaceState(null, "", `#${id}`);
     setActiveId(id);
   };
