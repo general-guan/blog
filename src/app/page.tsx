@@ -11,11 +11,11 @@ export default function Home() {
         <div className="feed-grid">
           {articles.map(({ slug, title, emoji, date }) => (
             <article key={slug} className="feed-card">
-              <Link href={`/article/${slug}`} className="feed-card-emoji">
+              <Link href={`/article/${slug}`} prefetch={true} className="feed-card-emoji">
                 {emoji ?? "📝"}
               </Link>
               <div className="feed-card-content">
-                <Link href={`/article/${slug}`} className="feed-card-link">
+                <Link href={`/article/${slug}`} prefetch={true} className="feed-card-link">
                   <h2 className="feed-card-title">{title}</h2>
                 </Link>
                 <div className="feed-card-meta">

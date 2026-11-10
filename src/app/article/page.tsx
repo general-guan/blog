@@ -17,7 +17,7 @@ export default function ArticleIndexPage() {
             <ul className="article-index-list">
               {articles.map(({ slug, title }) => (
                 <li key={slug}>
-                  <Link href={`/article/${slug}`} className="article-index-link">
+                  <Link href={`/article/${slug}`} prefetch={true} className="article-index-link">
                     {title}
                   </Link>
                   <span className="article-index-slug">/article/{slug}</span>

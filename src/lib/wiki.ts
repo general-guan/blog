@@ -6,9 +6,11 @@ import type { TocItem } from "@/app/article/toc";
 const WIKI_DIR = join(process.cwd(), "src", "wiki");
 
 // 每次都直接读文件（开发时修改 wiki 文件立即生效）
+// slug 可含子路径（如 java/history），对应 wiki 目录的子目录结构
 export function readArticle(slug: string): string | null {
-  // slug 只允许字母数字与常见符号，防路径穿越
-  if (!/^[\p{L}\p{N}][\p{L}\p{N}._-]*$/u.test(slug) || slug.includes("..")) return null;
+  // 每段只允许字母数字与常见符号，防路径穿越（.. 的首字符不是字母数字，天然被拒）
+  const segments = slug.split("/");
+  if (segments.some((s) => !/^[\p{L}\p{N}][\p{L}\p{N}._-]*$/u.test(s))) return null;
   try {
     return readFileSync(join(WIKI_DIR, `${slug}.md`), "utf8");
   } catch {
@@ -16,17 +18,19 @@ export function readArticle(slug: string): string | null {
   }
 }
 
-// 列出 wiki 目录下所有文章（首页信息流 / 列表页 / generateStaticParams 用）
+// 递归列出 wiki 目录下所有文章（首页信息流 / 列表页 / generateStaticParams 用）
 export function listArticles(): {
   slug: string;
   title: string;
   emoji: string | null;
   date: string;
 }[] {
-  return readdirSync(WIKI_DIR)
+  return readdirSync(WIKI_DIR, { recursive: true, encoding: "utf8" })
     .filter((name) => name.endsWith(".md"))
     .map((name) => {
-      const slug = name.slice(0, -3);
+      // recursive 扫描在 Windows 上以 \ 分隔层级，统一成 /；
+      // slug 为去掉 .md 后缀的相对路径，如 java/history
+      const slug = name.replaceAll("\\", "/").slice(0, -3);
       const { title, emoji } = splitTitle(readFileSync(join(WIKI_DIR, name), "utf8"));
       // 文件修改时间作为展示日期（YYYY/MM/DD）
       const mtime = statSync(join(WIKI_DIR, name)).mtime;
